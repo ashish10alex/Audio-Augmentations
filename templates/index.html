@@ -1,0 +1,20 @@
+<!doctype html>
+<title>Hello from Flask</title>
+{% if name %}
+<h1>Hello {{ name }}!</h1>
+{% else %}
+<h1>Hello, World!</h1>
+{% endif %}
+
+
+<button id='my-button'>Play</button>
+
+<script>
+  playButton = document.getElementById('my-button')
+
+  playButton.addEventListener('click', () => {
+    var audioElement = new Audio('static/music/test.wav');
+    audioElement.play();
+  })
+
+</script>
