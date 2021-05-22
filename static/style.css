@@ -1,0 +1,80 @@
+
+body {
+    /* background-color: burlywood; */
+    background-color: #36454f;
+    color: whitesmoke;
+}
+
+h1 {
+  text-align: center;
+}
+
+
+.dark-mode {
+  background-color: whitesmoke;
+  color: black;
+}
+
+
+.wrapper > div{
+  /* background-color: antiquewhite; */
+  background-color: #a4b5c1;
+  padding: 1em;
+
+}
+
+.box-dark {
+  /* background-color: antiquewhite; */
+  /* background-color :#7690a2; */
+  text-align: center;
+  color: whitesmoke;
+  /* border-radius: 25px; */
+}
+
+ 
+.box-light {
+  /* background-color: #D3D3D3; */
+  /* background-color: #556d7c; */
+  text-align: center;
+  color: black;
+} 
+
+#grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1em;
+  grid-auto-rows: 250px;
+}
+/* 
+#audio{
+  width: 500px;
+    height: 100px;
+    background-color: #000000;
+    position: bottom;
+} */
+
+#audio{
+    /* background-color:#36454f; */
+    position: relative;
+    /* border: 3px solid #73AD21; */
+    top: 190px;
+}
+
+#aug-type{
+  position: relative;
+  bottom: 70px;
+}
+
+#grid img{
+  position: relative;
+  bottom: 110px;
+  height: auto;
+}
+
+#dark-mode-button{
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+

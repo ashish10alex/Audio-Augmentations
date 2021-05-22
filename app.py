@@ -7,7 +7,7 @@ from flask import send_from_directory
 app = Flask(__name__)
 
 @app.route('/', methods=['GET', 'POST'])
-def hello_world(name='Ashish'):
+def hello_world(name=''):
     if request.method == 'POST':
         return '<h2> Post method was called </h2>'
 
