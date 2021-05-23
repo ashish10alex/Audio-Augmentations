@@ -63,51 +63,47 @@
 {% endif %}
 
 
-
 <button id="dark-mode-button" onclick="ToogleDarkLightMode()">Toggle dark mode</button>
 
 
 
 <div class="header">
-  <a href="#default" class="logo"> <h1>Augment your Audio file</h1> </a>
+  <a href="#default" class="logo">
+    <h1>Augment your Audio file</h1>
+  </a>
 </div>
 
 
+<div class="file-upload">
+  <form method="POST" action="/" enctype="multipart/form-data">
+    <input type="submit" class="file-upload-btn" value="Generate Augmentations">
+    <div class="image-upload-wrap">
+      <input class="file-upload-input" type="file" name="file">
+      <div class="drag-text">
+        <h3>Drag and drop your audio file</h3>
+      </div>
+    </div>
+    </div>
+  </form>
+</div>
 
-<form method="POST" action="/" enctype="multipart/form-data">
-  <p><input type="file" name="file"></p>
-  <p><input type="submit" value="Submit"></p>
-</form>
+<br>
+<br>
 
 <div id="grid">
 
-{% if images %}
+  {% if images %}
   {% for key in images.keys() %}
   <div id="box" class="box-dark">
     <!-- removing preload auto takes care of previous audio being loaded issue -->
-     <audio id="audio" src="/static/audio/client_aug_wavs/{{key}}.wav" controls></audio>
+    <audio id="audio" src="/static/audio/client_aug_wavs/{{key}}.wav" controls></audio>
     <p id="aug-type-personal"> {{ key }} </p>
     <img src="{{ images[key] }}" width="250" height="50" alt=" {{ key }} Augmented "></img>
   </div>
   {% endfor %}
-{% endif %}
+  {% endif %}
 
 </div>
-
-
-<!-- {% if images %}
-<div id="grid">
-  {% for key in images.keys() %}
-  <div id="box" class="box-dark"> -->
-    <!-- removing preload auto takes care of previous audio being loaded issue -->
-    <!-- <audio id="audio" src="/static/audio/test.wav" controls></audio>
-    <p id="aug-type"> {{ key }} </p>
-    <img src="{{ images[key] }}" width="300" height="200" alt=" {{ key }} Augmented "></img>
-  </div>
-
-</div>
-{% endfor %}
-{% endif %}  -->
 
 
 
@@ -115,17 +111,22 @@
 <script>
 
   function ToogleDarkLightMode() {
-
     let box_element = document.querySelectorAll('#box')
     box_element.forEach(e => {
       // debugger
       if (e.className == 'box-light') { e.className = 'box-dark' }
       else { e.className = 'box-light' }
     })
-
     let body_element = document.body;
     body_element.classList.toggle("dark-mode");
-
   }
+
+  // Change file name when uploading
+  let file_input = document.getElementsByClassName('file-upload-input')[0];
+  file_input.addEventListener("change", () => {
+    let upload_text = document.getElementsByClassName("drag-text")[0].children[0]
+    upload_text.textContent = document.getElementsByClassName('file-upload-input')[0].files[0].name
+  })
+
 
 </script>

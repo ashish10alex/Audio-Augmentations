@@ -10,11 +10,13 @@ and go to your web browser (e.g chrome/safari): <dl> <link> localhost:5000 </lin
 
 To do 
 
-* Better file uploader 
-* Check if uploaded file is audio and do error handling
-* Load examples dynamically with Jinja for loop
-* Remove border from client audio plots
-* Use threads / async to load multiple augmented files - 
+- [x] Better file uploader  
+- [] Check if uploaded file is audio and do error handling
+- [] Load examples dynamically with Jinja for loop
+- [] Remove border from client audio plots
+- [] Use threads / async to load multiple augmented files - 
     >  https://www.youtube.com/watch?v=tdIIJuPh3SI&t=5070s
     
     >  https://flask.palletsprojects.com/en/2.0.x/async-await/
+
+- [] Create Navbar 
