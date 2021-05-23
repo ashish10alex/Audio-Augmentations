@@ -1,7 +1,8 @@
 from flask import Flask
-from flask import request 
+from flask import request
+from flask.helpers import url_for 
 import soundfile as sf
-from flask import render_template
+from flask import render_template, redirect, flash
 import librosa
 import base64
 import io
@@ -9,14 +10,35 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 
 app = Flask(__name__)
+app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+#max upload size of 30Mb
+app.config['MAX_CONTENT_LENGTH'] = 30 * 1000 * 1000
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
     show_examples = True #True if you want to see pre-augmented examples
     if request.method == 'POST':
+
         show_examples=False
+
+        if 'file' not in request.files:
+            flash('No file part', 'error')
+            return redirect(request.url)
+
         #get the uploaded file and save to static folder
         uploaded_file = request.files['file']
+
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if uploaded_file.filename == '':
+            flash('No selected file!', "error")
+            return redirect(request.url)
+        
+        if uploaded_file.content_type != 'audio/wav':
+            flash('Please upload .wav files')
+            return redirect(request.url)
+
         save_path = 'static/audio/test.wav'
         uploaded_file.save(save_path)
         
@@ -37,12 +59,22 @@ def index():
     if request.method == 'GET':
         return render_template("index.html", show_examples=show_examples)
 
+
 def create_figure(wav):
     fig = Figure()
     axis = fig.add_subplot(1, 1, 1)
     axis.specgram(wav)
+    
+    #tricks to make the plots look clearner - removing white space (needs more work)
     axis.set_xticks([])
     axis.set_yticks([])
+    axis.get_xaxis().set_visible(False)
+    axis.get_yaxis().set_visible(False)
+    fig.tight_layout(pad=0)
+    fig.bbox_inches='tight'
+    fig.pad_inches=0
+    
+    
     pngImage = io.BytesIO()
     FigureCanvas(fig).print_png(pngImage)
     pngImageB64String = "data:image/png;base64,"
@@ -57,7 +89,7 @@ FrequencyMask, TimeMask, AddShortNoises, AddImpulseResponse
 SAMPLE_RATE = 8000
 
 augment = Compose([
-AddShortNoises('/Users/ashishalex/Desktop/plane_noise/',
+AddShortNoises('static/audio/plane_noise/',
                 min_time_between_sounds=3.0,
                 max_time_between_sounds=3.0,
                 min_snr_in_db=0,
