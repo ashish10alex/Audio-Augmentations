@@ -14,3 +14,4 @@ To do
 * Check if uploaded file is audio and do error handling
 * Load examples dynamically with Jinja for loop
 * Remove border from client audio plots
+* Use threads to load multiple augmented files 
