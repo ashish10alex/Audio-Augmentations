@@ -8,83 +8,108 @@
 
 <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
 
-  
-  <div id="grid">
 
-    <div id="box" class="box-dark" >
-      <audio id="audio" src='/static/audio/Un-Augmented.wav' controls preload='auto'></audio>
-      <p id="aug-type"> Un augmented</p>
-      <img src="static/images/Un-Augmented.png" width = "300" height = "200" alt="un-augmented"></img>
-    </div>
-  
-    <div id="box" class="box-dark" >
-      <!-- <audio src='/static/music/test.wav' controls preload='auto'></audio> -->
-      <audio id="audio" src='/static/audio/AddGaussianNoise.wav' controls preload='auto'></audio>
-      <p id="aug-type"> Gaussian noise</p>
-      <img src="static/images/AddGaussianNoise.png" width = "300" height = "200" alt="gaussian noise augmented"></img>
-    </div>
-    
-    <div id="box" class="box-dark">
-      <audio id="audio" src='/static/audio/AddShortNoises.wav' controls preload='auto'></audio>
-      <p id="aug-type"> Short noise</p>
-      <img src="static/images/AddShortNoises.png" width = "300" height = "200" alt="short noise augmented"></img>
-    </div>
-  
-    <div id="box" class="box-dark">
-      <audio id="audio" src='/static/audio/TimeMask.wav' controls preload='auto'></audio>
-      <p id="aug-type">Time Mask</p>
-      <img src="static/images/TimeMask.png" width = "300" height = "200" alt="time mask augmented"></img>
-    </div>
-  
-    <div id="box" class="box-dark">
-      <audio id="audio" src='/static/audio/FrequencyMask.wav' controls preload='auto'></audio>
-      <p id="aug-type">Frequency Mask</p>
-      <img src="static/images/FrequencyMask.png" width = "300" height = "200" alt="freqeuncy mask augmented"></img>
-    </div>
-
-    <div id="box" class="box-dark">
-      <audio id="audio" src='/static/audio/TFMask.wav' controls preload='auto'></audio>
-      <p id="aug-type">Time Frequency Mask</p>
-      <img src="static/images/TFMask.png" width = "300" height = "200" alt="time-frequecy mask augmented"></img>
-    </div>
-
-   <div id="box" class="box-dark">
-      <audio id="audio" src='/static/audio/TimeStretch.wav' controls preload='auto'></audio>
-      <p id="aug-type">Time Stretch</p>
-      <img src="static/images/TimeStretch.png" width = "300" height = "200" alt="time stretch augmented"></img>
-    </div>
+<div id="grid">
 
   <div id="box" class="box-dark">
-      <audio id="audio" src='/static/audio/PitchShift.wav' controls preload='auto'></audio>
-      <p id="aug-type">Pitch shift</p>
-      <img src="static/images/PitchShift.png" width = "300" height = "200" alt="pitch shift augmented"></img>
-    </div>
- 
+    <audio id="audio" src='/static/audio/Un-Augmented.wav' controls preload='auto'></audio>
+    <p id="aug-type"> Un augmented</p>
+    <img src="static/images/Un-Augmented.png" width="300" height="200" alt="un-augmented"></img>
   </div>
 
+  <div id="box" class="box-dark">
+    <!-- <audio src='/static/music/test.wav' controls preload='auto'></audio> -->
+    <audio id="audio" src='/static/audio/AddGaussianNoise.wav' controls preload='auto'></audio>
+    <p id="aug-type"> Gaussian noise</p>
+    <img src="static/images/AddGaussianNoise.png" width="300" height="200" alt="gaussian noise augmented"></img>
+  </div>
 
-  <button id="dark-mode-button" onclick="ToogleDarkLightMode()">Toggle dark mode</button>
+  <div id="box" class="box-dark">
+    <audio id="audio" src='/static/audio/AddShortNoises.wav' controls preload='auto'></audio>
+    <p id="aug-type"> Short noise</p>
+    <img src="static/images/AddShortNoises.png" width="300" height="200" alt="short noise augmented"></img>
+  </div>
 
-  <script>
-    playButton = document.getElementById('my-button')
+  <div id="box" class="box-dark">
+    <audio id="audio" src='/static/audio/TimeMask.wav' controls preload='auto'></audio>
+    <p id="aug-type">Time Mask</p>
+    <img src="static/images/TimeMask.png" width="300" height="200" alt="time mask augmented"></img>
+  </div>
 
-    // playButton.addEventListener('click', () => {
-    //   var audioElement = new Audio('static/music/test.wav');
-    //   audioElement.play();
-    // })
+  <div id="box" class="box-dark">
+    <audio id="audio" src='/static/audio/FrequencyMask.wav' controls preload='auto'></audio>
+    <p id="aug-type">Frequency Mask</p>
+    <img src="static/images/FrequencyMask.png" width="300" height="200" alt="freqeuncy mask augmented"></img>
+  </div>
 
-    function ToogleDarkLightMode() {
+  <div id="box" class="box-dark">
+    <audio id="audio" src='/static/audio/TFMask.wav' controls preload='auto'></audio>
+    <p id="aug-type">Time Frequency Mask</p>
+    <img src="static/images/TFMask.png" width="300" height="200" alt="time-frequecy mask augmented"></img>
+  </div>
+
+  <div id="box" class="box-dark">
+    <audio id="audio" src='/static/audio/TimeStretch.wav' controls preload='auto'></audio>
+    <p id="aug-type">Time Stretch</p>
+    <img src="static/images/TimeStretch.png" width="300" height="200" alt="time stretch augmented"></img>
+  </div>
+
+  <div id="box" class="box-dark">
+    <audio id="audio" src='/static/audio/PitchShift.wav' controls preload='auto'></audio>
+    <p id="aug-type">Pitch shift</p>
+    <img src="static/images/PitchShift.png" width="300" height="200" alt="pitch shift augmented"></img>
+  </div>
+
+</div>
+
+
+<button id="dark-mode-button" onclick="ToogleDarkLightMode()">Toggle dark mode</button>
+
+<br>
+<h2>File Upload</h2>
+
+ 
+<form method="POST" action="" enctype="multipart/form-data">
+  <p><input type="file" name="file"></p>
+  <p><input type="submit" value="Submit"></p>
+</form> 
+
+
+
+<!-- <img src="static/images/test.png" width = "300" height = "200" alt="Loaded audio"></img> -->
+
+<!-- <img src="/plot.png" alt="my plot" width="300", height="200"> -->
+
+{% if image %}
+  <div class="custom-spec-display">
+  <p>Spectrogram</p>
+  <img src="{{ image }}" width="300" height="200"/>
+  <!-- removing preload auto takes care of previous audio being loaded issue -->
+  <audio  src='/static/audio/test.wav' controls ></audio>
+  </div>
+{% endif %}
+
+
+<script>
+  playButton = document.getElementById('my-button')
+
+  // playButton.addEventListener('click', () => {
+  //   var audioElement = new Audio('static/music/test.wav');
+  //   audioElement.play();
+  // })
+
+  function ToogleDarkLightMode() {
 
     let box_element = document.querySelectorAll('#box')
     box_element.forEach(e => {
       // debugger
-      if (e.className == 'box-light'){e.className =  'box-dark'}
-      else {e.className = 'box-light'}
+      if (e.className == 'box-light') { e.className = 'box-dark' }
+      else { e.className = 'box-light' }
     })
 
     let body_element = document.body;
     body_element.classList.toggle("dark-mode");
 
-    }
+  }
 
-  </script>
+</script>

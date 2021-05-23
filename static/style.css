@@ -5,7 +5,11 @@ body {
     color: whitesmoke;
 }
 
-h1 {
+ h1 {
+  text-align: center;  
+}
+
+h2{
   text-align: center;
 }
 
@@ -46,13 +50,6 @@ h1 {
   grid-gap: 1em;
   grid-auto-rows: 250px;
 }
-/* 
-#audio{
-  width: 500px;
-    height: 100px;
-    background-color: #000000;
-    position: bottom;
-} */
 
 #audio{
     /* background-color:#36454f; */
@@ -78,3 +75,15 @@ h1 {
   right: 10px;
 }
 
+.custom-spec-display{
+  /* align-items: center; */
+  text-align: center;
+}
+
+form button:hover{
+  background: #149174;
+	color: #0C5645;
+}
+form button:active{
+  border:0;
+}
