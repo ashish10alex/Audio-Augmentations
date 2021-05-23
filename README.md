@@ -19,4 +19,4 @@ To do
     
     >  https://flask.palletsprojects.com/en/2.0.x/async-await/
 
-- [] Create Navbar 
+- [ ] Create Navbar 
