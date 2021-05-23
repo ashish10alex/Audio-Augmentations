@@ -14,4 +14,7 @@ To do
 * Check if uploaded file is audio and do error handling
 * Load examples dynamically with Jinja for loop
 * Remove border from client audio plots
-* Use threads to load multiple augmented files 
+* Use threads / async to load multiple augmented files - 
+    >  https://www.youtube.com/watch?v=tdIIJuPh3SI&t=5070s
+    
+    >  https://flask.palletsprojects.com/en/2.0.x/async-await/
