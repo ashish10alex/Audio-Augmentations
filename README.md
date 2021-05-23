@@ -7,3 +7,8 @@ To run the web app -
 python3 app.py
 ```
 and go to your web browser (e.g chrome/safari): <dl> <link> localhost:5000 </link> </dl>
+
+To do 
+
+* Better file uploader 
+* Check if uploaded file is audio and do error handling

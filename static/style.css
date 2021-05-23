@@ -13,6 +13,18 @@ h2{
   text-align: center;
 }
 
+.header{
+  text-align: center;
+  color: white;
+  background-color: #424a50;
+  padding: 3px;
+  margin: 40px;
+}
+
+.header a{
+  text-decoration: none;
+  color: whitesmoke;
+}
 
 .dark-mode {
   background-color: whitesmoke;
@@ -61,6 +73,11 @@ h2{
 #aug-type{
   position: relative;
   bottom: 70px;
+}
+
+#aug-type-personal{
+  position: relative;
+  bottom: 95px;
 }
 
 #grid img{
