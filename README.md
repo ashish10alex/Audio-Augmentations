@@ -12,6 +12,7 @@ To do
 
 - [x] Better file uploader  
 - [x] Check if uploaded file is audio and do error handling
+- [ ] Add Navbar
 - [ ] Load examples dynamically with Jinja for loop
 - [ ] Remove border from client audio plots
 - [ ] Use threads / async to load multiple augmented files - 
