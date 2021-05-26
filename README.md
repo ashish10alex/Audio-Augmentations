@@ -22,3 +22,7 @@ To do
 
 - [ ] Create Navbar 
 - [ ] ENV variables for secret key
+
+Documentation
+
+- [ ] For latex support use - https://katex.org/
