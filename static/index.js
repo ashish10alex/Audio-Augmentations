@@ -3,7 +3,6 @@ dark_mode_button.addEventListener('click', () => {
   ToogleDarkLightMode()
 })
 
-
 function ToogleDarkLightMode() {
 
   // add here to change header div background color
@@ -31,3 +30,41 @@ file_input.addEventListener("change", () => {
   upload_text.textContent = document.getElementsByClassName('file-upload-input')[0].files[0].name
 })
 
+
+
+//Modals
+let modals = document.getElementsByClassName('modal')
+// get the button elements by class name
+let buttons = document.getElementsByClassName('refs')
+// get the close buttons by class name
+let closeButtons = document.getElementsByClassName('closeBtn')
+
+
+buttons[0].addEventListener('click', () => {
+    modals[0].style.display ='block'
+})
+
+// buttons[1].addEventListener('click', () => {
+//     modals[1].style.display ='block'
+// })
+
+closeButtons[0].addEventListener('click', () => {
+    modals[0].style.display = 'none'
+})
+
+// closeButtons[1].addEventListener('click', () => {
+//     modals[1].style.display = 'none'
+// })
+
+
+
+window.addEventListener('click', (e) => {
+    if(e.target == modals[0]){
+        modals[0].style.display ='none'
+    }
+
+    // if(e.target == modals[1]){
+    //     console.log('modal 2')
+    //     modals[1].style.display='none'
+    // }
+})

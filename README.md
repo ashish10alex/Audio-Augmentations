@@ -12,6 +12,8 @@ To do
 
 - [x] Better file uploader  
 - [x] Check if uploaded file is audio and do error handling
+- [ ] Add pop up for all Augmentations - Load text from separate file from server side. 
+- [ ] Split into multiple files
 - [ ] Add Navbar
 - [ ] Load examples dynamically with Jinja for loop
 - [ ] Remove border from client audio plots
@@ -23,4 +25,4 @@ To do
 
 Documentation
 
-- [ ] For latex support use - https://katex.org/
+- [ ] For latex support in pop ups was support by - https://katex.org/

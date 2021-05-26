@@ -1,6 +1,19 @@
 <!doctype html>
 <title>Audio augmentations</title>
 
+<head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css"
+    integrity="sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"
+    integrity="sha384-YNHdsYkH6gMx9y3mRkmcJ2mFUjTd0qNQQvY9VYZgQd7DcN7env35GzlmFaZ23JGp"
+    crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
+    integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
+    onload="renderMathInElement(document.body);"></script>
+
+</head>
+
+
 
 
 <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
@@ -12,7 +25,7 @@
 {% if show_examples %}
 
 <div class="header">
-  <h1>Audio Augmentations</h1>
+  <h1>Audio Augmentations </h1>
 </div>
 
 <h2> Example Augmentations</h2>
@@ -28,8 +41,9 @@
   <div id="box" class="box-dark">
     <!-- <audio src='/static/music/test.wav' controls preload='auto'></audio> -->
     <audio id="audio" src='/static/audio/AddGaussianNoise.wav' controls preload='auto'></audio>
-    <p id="aug-type"> Gaussian noise</p>
-    <img src="static/images/AddGaussianNoise.png" width="300" height="200" alt="gaussian noise augmented"></img>
+    <p id="aug-type"> <a>Gaussian noise</a> </p>
+    <img class='refs' src="static/images/AddGaussianNoise.png" width="300" height="200"
+      alt="gaussian noise augmented"></img>
   </div>
 
   <div id="box" class="box-dark">
@@ -72,6 +86,8 @@
 {% endif %}
 
 
+<!-- Augment your own audio files -->
+
 <div class="header">
   <a href="#default" class="logo">
     <h1>Augment your Audio file</h1>
@@ -103,10 +119,10 @@
 <br>
 <br>
 
+
 <div id="grid">
 
-
-<!-- Loop over uploaded files by the client and display them -->
+  <!-- Loop over uploaded files by the client and display them -->
   {% if images %}
   {% for key in images.keys() %}
   <div id="box" class="box-dark">
@@ -118,10 +134,36 @@
   {% endfor %}
   {% endif %}
 
-</div>
 
+  <!-- Modals for pop ups -->
 
+  <div id="simpleModal1" class="modal">
+    <!-- modal class spans the whole page-->
+    <div class="modal-content">
+      <span id="closeBtn1" class="closeBtn">&times;</span>
+      <p id="refs">
 
-<script type="text/javascript"
-src="{{ url_for('static', filename='index.js') }}">
-</script>
+        <h3>Gaussian Noise Augmentation</h3>
+
+         One of the predominant ways to augments training examples in deep learning is to add additive Gaussian noise to 
+        training examples. Gaussian noise was added to mixture  \(\boldsymbol{\bar{x}} \) as
+        follows:
+
+        \begin{equation}
+        \boldsymbol{\bar{x}_{ga}} = \boldsymbol{\bar{x}} + \textit{A} \times \boldsymbol{\bar{g}}.
+        \end{equation}
+
+        Where \( \boldsymbol{\bar{x}}_{ga} \) is the Gaussian augmented mixture and \( \boldsymbol{\bar{g}} \) is gaussian noise
+        sampled from normal distribution and \( A \) is the Amplitude with which Gaussian noise was added. Higher the value
+        of \( A \) more noiser is  the gaussian noise. \( A \) is randomly sampled from an uniform distribution as:
+
+        \begin{equation}
+        A = \mathcal{U}(Amin, Amax).
+        \end{equation}
+
+      </p>
+    </div>
+  </div>
+
+  <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}">
+  </script>

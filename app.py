@@ -1,4 +1,5 @@
 from flask import Flask
+import os
 from flask import request
 from flask.helpers import url_for 
 import soundfile as sf
@@ -32,7 +33,7 @@ def index():
         # if user does not select file, browser also
         # submit an empty part without filename
         if uploaded_file.filename == '':
-            flash('No selected file!', "error")
+            flash('No file selected!', "error")
             return redirect(request.url)
         
         if uploaded_file.content_type != 'audio/wav':
@@ -57,7 +58,22 @@ def index():
         return render_template('index.html', images=aug_imgs_dict, show_examples=show_examples)
 
     if request.method == 'GET':
-        return render_template("index.html", show_examples=show_examples)
+        
+        # Commented for now 
+        # audio_file_paths = []
+        # audio_spectrogram_paths = []
+        # for file in os.listdir('static/audio'):
+        #     if file.endswith(".wav"):
+        #         audio_file_paths.append('static/audio/{}'.format(file))
+       
+        # for file in os.listdir('static/images'):
+        #     if file.endswith(".png"):
+        #         audio_spectrogram_paths.append('static/images/{}'.format(file))
+        # print(audio_spectrogram_paths)
+        # print(audio_file_paths)
+
+
+        return render_template("index.html", show_examples=show_examples, audio_spectrogram_paths=None, audio_file_paths=None)
 
 
 def create_figure(wav):
