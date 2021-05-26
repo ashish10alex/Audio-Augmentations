@@ -19,8 +19,6 @@ To do
     >  https://www.youtube.com/watch?v=tdIIJuPh3SI&t=5070s
     
     >  https://flask.palletsprojects.com/en/2.0.x/async-await/
-
-- [ ] Create Navbar 
 - [ ] ENV variables for secret key
 
 Documentation
