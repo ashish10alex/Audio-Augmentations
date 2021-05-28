@@ -9,6 +9,7 @@ import base64
 import io
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
+from descriptions import description_dict
 
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -55,7 +56,7 @@ def index():
             aug_imgs_dict[key] = create_figure(augment_wavs_dict[key])
             sf.write('static/audio/client_aug_wavs/{}.wav'.format(key), augment_wavs_dict[key], samplerate=8000)
 
-        return render_template('index.html', images=aug_imgs_dict, show_examples=show_examples)
+        return render_template('index.html', images=aug_imgs_dict, show_examples=show_examples, description_dict=description_dict)
 
     if request.method == 'GET':
         
@@ -73,7 +74,7 @@ def index():
         # print(audio_file_paths)
 
 
-        return render_template("index.html", show_examples=show_examples, audio_spectrogram_paths=None, audio_file_paths=None)
+        return render_template("index.html", show_examples=show_examples, audio_spectrogram_paths=None, audio_file_paths=None, description_dict=description_dict)
 
 
 def create_figure(wav):

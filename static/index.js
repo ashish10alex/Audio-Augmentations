@@ -44,13 +44,19 @@ buttons[0].addEventListener('click', () => {
     modals[0].style.display ='block'
 })
 
-// buttons[1].addEventListener('click', () => {
-//     modals[1].style.display ='block'
-// })
+ buttons[1].addEventListener('click', () => {
+   console.log('click')
+     modals[1].style.display ='block'
+ })
 
 closeButtons[0].addEventListener('click', () => {
     modals[0].style.display = 'none'
 })
+
+closeButtons[1].addEventListener('click', () => {
+    modals[1].style.display = 'none'
+})
+
 
 // closeButtons[1].addEventListener('click', () => {
 //     modals[1].style.display = 'none'

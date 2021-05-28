@@ -35,13 +35,13 @@
   <div id="box" class="box-dark">
     <audio id="audio" src='/static/audio/Un-Augmented.wav' controls preload='auto'></audio>
     <p id="aug-type"> Un augmented</p>
-    <img src="static/images/Un-Augmented.png" width="300" height="200" alt="un-augmented"></img>
+    <img class="refs" src="static/images/Un-Augmented.png" width="300" height="200" alt="un-augmented"></img>
   </div>
 
   <div id="box" class="box-dark">
     <!-- <audio src='/static/music/test.wav' controls preload='auto'></audio> -->
     <audio id="audio" src='/static/audio/AddGaussianNoise.wav' controls preload='auto'></audio>
-    <p id="aug-type"> <a>Gaussian noise</a> </p>
+    <p id="aug-type">Gaussian noise </p>
     <img class='refs' src="static/images/AddGaussianNoise.png" width="300" height="200"
       alt="gaussian noise augmented"></img>
   </div>
@@ -49,37 +49,37 @@
   <div id="box" class="box-dark">
     <audio id="audio" src='/static/audio/AddShortNoises.wav' controls preload='auto'></audio>
     <p id="aug-type"> Short noise</p>
-    <img src="static/images/AddShortNoises.png" width="300" height="200" alt="short noise augmented"></img>
+    <img class='refs' src="static/images/AddShortNoises.png" width="300" height="200" alt="short noise augmented"></img>
   </div>
 
   <div id="box" class="box-dark">
     <audio id="audio" src='/static/audio/TimeMask.wav' controls preload='auto'></audio>
     <p id="aug-type">Time Mask</p>
-    <img src="static/images/TimeMask.png" width="300" height="200" alt="time mask augmented"></img>
+    <img class="refs" src="static/images/TimeMask.png" width="300" height="200" alt="time mask augmented"></img>
   </div>
 
   <div id="box" class="box-dark">
     <audio id="audio" src='/static/audio/FrequencyMask.wav' controls preload='auto'></audio>
     <p id="aug-type">Frequency Mask</p>
-    <img src="static/images/FrequencyMask.png" width="300" height="200" alt="freqeuncy mask augmented"></img>
+    <img class="refs" src="static/images/FrequencyMask.png" width="300" height="200" alt="freqeuncy mask augmented"></img>
   </div>
 
   <div id="box" class="box-dark">
     <audio id="audio" src='/static/audio/TFMask.wav' controls preload='auto'></audio>
     <p id="aug-type">Time Frequency Mask</p>
-    <img src="static/images/TFMask.png" width="300" height="200" alt="time-frequecy mask augmented"></img>
+    <img class="refs" src="static/images/TFMask.png" width="300" height="200" alt="time-frequecy mask augmented"></img>
   </div>
 
   <div id="box" class="box-dark">
     <audio id="audio" src='/static/audio/TimeStretch.wav' controls preload='auto'></audio>
     <p id="aug-type">Time Stretch</p>
-    <img src="static/images/TimeStretch.png" width="300" height="200" alt="time stretch augmented"></img>
+    <img class="refs" src="static/images/TimeStretch.png" width="300" height="200" alt="time stretch augmented"></img>
   </div>
 
   <div id="box" class="box-dark">
     <audio id="audio" src='/static/audio/PitchShift.wav' controls preload='auto'></audio>
     <p id="aug-type">Pitch shift</p>
-    <img src="static/images/PitchShift.png" width="300" height="200" alt="pitch shift augmented"></img>
+    <img class="refs" src="static/images/PitchShift.png" width="300" height="200" alt="pitch shift augmented"></img>
   </div>
 
 </div>
@@ -109,7 +109,6 @@
         {% endfor %}
         {% endif %}
         {% endwith %}
-
       </div>
     </div>
 </div>
@@ -136,34 +135,19 @@
 
 
   <!-- Modals for pop ups -->
-
-  <div id="simpleModal1" class="modal">
-    <!-- modal class spans the whole page-->
+  <!--Dynamic modal generation for each augmentation  -->
+  <!-- Javascript pending -->
+  {% for key in description_dict.keys() %}
+  <div id="simpleModal{{i}}" class="modal">
     <div class="modal-content">
-      <span id="closeBtn1" class="closeBtn">&times;</span>
-      <p id="refs">
-
-        <h3>Gaussian Noise Augmentation</h3>
-
-         One of the predominant ways to augments training examples in deep learning is to add additive Gaussian noise to 
-        training examples. Gaussian noise was added to mixture  \(\boldsymbol{\bar{x}} \) as
-        follows:
-
-        \begin{equation}
-        \boldsymbol{\bar{x}_{ga}} = \boldsymbol{\bar{x}} + \textit{A} \times \boldsymbol{\bar{g}}.
-        \end{equation}
-
-        Where \( \boldsymbol{\bar{x}}_{ga} \) is the Gaussian augmented mixture and \( \boldsymbol{\bar{g}} \) is gaussian noise
-        sampled from normal distribution and \( A \) is the Amplitude with which Gaussian noise was added. Higher the value
-        of \( A \) more noiser is  the gaussian noise. \( A \) is randomly sampled from an uniform distribution as:
-
-        \begin{equation}
-        A = \mathcal{U}(Amin, Amax).
-        \end{equation}
-
+      <span id="closeBtn{{i}}" class="closeBtn">&times;</span>
+      <p>
+      <h3>Augmentation {{i}}</h3>
+      {{description_dict[key]}}
       </p>
     </div>
-  </div>
+  </div> 
+  {% endfor %}
 
-  <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}">
+<script type="text/javascript" src="{{ url_for('static', filename='index.js') }}">
   </script>
