@@ -6,6 +6,8 @@ To run the web app -
 ```
 python3 app.py
 
+#or to run on local network 
+#change host parameter in app.run followed by 
 flask run -h 192.168.X.X
 ```
 
