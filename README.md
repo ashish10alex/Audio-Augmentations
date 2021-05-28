@@ -17,13 +17,16 @@ To do
 - [x] Better file uploader  
 - [x] Check if uploaded file is audio and do error handling
 - [ ] Add pop up for all Augmentations 
-    > Load text from separate file from server side.
-    
+  - [ ] Load text from separate file from server side
+
 - [ ] Javascript for loop modal click event
+  - [x] Basic functionality - Added using closures (complex ? )
+  - [ ] Close pop up on outside click 
+
 - [ ] Split into multiple files
 - [ ] Add Navbar
 - [ ] Load examples dynamically with Jinja for loop
-- [ ] Remove border from client audio plots
+- [x] Remove border from client audio plots
 - [ ] Use threads / async to load multiple augmented files - 
     >  https://www.youtube.com/watch?v=tdIIJuPh3SI&t=5070s
     

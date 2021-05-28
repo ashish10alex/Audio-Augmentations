@@ -79,17 +79,18 @@ def index():
 
 def create_figure(wav):
     fig = Figure()
+    
     axis = fig.add_subplot(1, 1, 1)
     axis.specgram(wav)
     
     #tricks to make the plots look clearner - removing white space (needs more work)
-    axis.set_xticks([])
-    axis.set_yticks([])
+    # axis.set_xticks([])
+    # axis.set_yticks([])
     axis.get_xaxis().set_visible(False)
     axis.get_yaxis().set_visible(False)
-    fig.tight_layout(pad=0)
+    axis.axis('off') # this line removes extra white spaces
+    fig.tight_layout(pad=0.0, w_pad=0.0, h_pad=1.0)
     fig.bbox_inches='tight'
-    fig.pad_inches=0
     
     
     pngImage = io.BytesIO()
@@ -106,6 +107,7 @@ FrequencyMask, TimeMask, AddShortNoises, AddImpulseResponse
 SAMPLE_RATE = 8000
 
 augment = Compose([
+AddGaussianNoise(min_amplitude=0.001, max_amplitude=0.015, p=1.0),
 AddShortNoises('static/audio/plane_noise/',
                 min_time_between_sounds=3.0,
                 max_time_between_sounds=3.0,
@@ -113,12 +115,13 @@ AddShortNoises('static/audio/plane_noise/',
                 max_snr_in_db=24,
                 p=1
               ),
-AddGaussianNoise(min_amplitude=0.001, max_amplitude=0.015, p=1.0),
+TimeMask(min_band_part=0.0, max_band_part=0.50, p=1),
+FrequencyMask(min_frequency_band=0.1, max_frequency_band=0.10, p=1),
 TimeStretch(0.9, 1.0, leave_length_unchanged=True,  p=1),
 PitchShift(min_semitones=1, max_semitones=2, p=1), 
-FrequencyMask(min_frequency_band=0.1, max_frequency_band=0.10, p=1),
-TimeMask(min_band_part=0.0, max_band_part=0.50, p=1),
 ])
+
+
 
 augment_tf = Compose([
 FrequencyMask(min_frequency_band=0.1, max_frequency_band=0.10, p=1),

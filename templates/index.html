@@ -61,7 +61,8 @@
   <div id="box" class="box-dark">
     <audio id="audio" src='/static/audio/FrequencyMask.wav' controls preload='auto'></audio>
     <p id="aug-type">Frequency Mask</p>
-    <img class="refs" src="static/images/FrequencyMask.png" width="300" height="200" alt="freqeuncy mask augmented"></img>
+    <img class="refs" src="static/images/FrequencyMask.png" width="300" height="200"
+      alt="freqeuncy mask augmented"></img>
   </div>
 
   <div id="box" class="box-dark">
@@ -95,6 +96,7 @@
 </div>
 
 
+<!-- Handle drag and drop of audio -->
 <div class="file-upload">
   <form method="POST" action="/" enctype="multipart/form-data">
     <input type="submit" class="file-upload-btn" value="Generate Augmentations">
@@ -120,7 +122,6 @@
 
 
 <div id="grid">
-
   <!-- Loop over uploaded files by the client and display them -->
   {% if images %}
   {% for key in images.keys() %}
@@ -128,7 +129,7 @@
     <!-- removing preload auto takes care of previous audio being loaded issue -->
     <audio id="audio" src="/static/audio/client_aug_wavs/{{key}}.wav" controls></audio>
     <p id="aug-type-personal"> {{ key }} </p>
-    <img src="{{ images[key] }}" width="250" height="50" alt=" {{ key }} Augmented "></img>
+    <img class="refs" src="{{ images[key] }}" width="250" height="50" alt=" {{ key }} Augmented "></img>
   </div>
   {% endfor %}
   {% endif %}
@@ -146,8 +147,8 @@
       {{description_dict[key]}}
       </p>
     </div>
-  </div> 
+  </div>
   {% endfor %}
 
-<script type="text/javascript" src="{{ url_for('static', filename='index.js') }}">
+  <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}">
   </script>
