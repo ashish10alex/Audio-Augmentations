@@ -16,7 +16,10 @@ To do
 
 - [x] Better file uploader  
 - [x] Check if uploaded file is audio and do error handling
-- [ ] Add pop up for all Augmentations - Load text from separate file from server side. 
+- [ ] Add pop up for all Augmentations 
+    > Load text from separate file from server side.
+    
+- [ ] Javascript for loop modal click event
 - [ ] Split into multiple files
 - [ ] Add Navbar
 - [ ] Load examples dynamically with Jinja for loop
