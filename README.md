@@ -6,8 +6,9 @@ To run the web app -
 ```
 python3 app.py
 
-#or to run on local network 
+#Or to run on local network 
 #change host parameter in app.run followed by 
+
 flask run -h 192.168.X.X
 ```
 
@@ -29,10 +30,7 @@ To do
 - [ ] Add Navbar
 - [ ] Load examples dynamically with Jinja for loop
 - [x] Remove border from client audio plots
-- [ ] Use threads / async to load multiple augmented files - 
-    >  https://www.youtube.com/watch?v=tdIIJuPh3SI&t=5070s
-    
-    >  https://flask.palletsprojects.com/en/2.0.x/async-await/
+- [ ] Use threads / async to load multiple augmented files - see `async_example.py`
 - [ ] ENV variables for secret key
 
 Documentation

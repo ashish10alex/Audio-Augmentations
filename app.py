@@ -1,3 +1,4 @@
+import time
 from flask import Flask
 import os
 from flask import request
@@ -48,13 +49,22 @@ def index():
         wav, _ = librosa.load('static/audio/test.wav', sr=8000)
 
         #get augmented wavfiles as dict {'AugName': wav_data}
+        #Less than 1.0 second to compute 8 augmentations
+        #Less than 0.5 sec to process after warmup
+        #Not the bottle neck
         augment_wavs_dict = augment_wav(wav)
 
+        # create_figure function takes ~ 1.8 secs - needs to be async ?  
+        # How to implement async in for loop ?  
+        start = time.time()
         #get image object and save augmented audio for playing on website
         aug_imgs_dict = {}
         for key in augment_wavs_dict.keys():
-            aug_imgs_dict[key] = create_figure(augment_wavs_dict[key])
+            #aug_imgs_dict[key] = create_figure(augment_wavs_dict[key])
             sf.write('static/audio/client_aug_wavs/{}.wav'.format(key), augment_wavs_dict[key], samplerate=8000)
+
+        total_time = time.time() - start
+        print('total_time: ', total_time)
 
         return render_template('index.html', images=aug_imgs_dict, show_examples=show_examples, description_dict=description_dict)
 
@@ -137,11 +147,7 @@ def augment_wav(wav):
     
     tf_wav = augment_tf(wav, sample_rate=8000)
     augmented_wavs_dict['TF Mask'] = tf_wav
-    print(augmented_wavs_dict.keys())
     return augmented_wavs_dict 
-
-
-
 
 
 if __name__ == "__main__":
