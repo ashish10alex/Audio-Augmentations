@@ -34,8 +34,8 @@ async def async_req():
     start = time.time()
     data = await asyncio.gather(
             async_get_data(),
-            #async_get_data(),
-            #async_get_data()
+            async_get_data(),
+            async_get_data()
             ) 
     total_time =  time.time() - start
     return f'<h2> Finally done {total_time :.5f} secs </h2>'
