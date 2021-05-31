@@ -2,3 +2,4 @@ static/audio/client_aug_wavs/*
 static/audio/test.wav
 .vscode
 *.pyc
+.*

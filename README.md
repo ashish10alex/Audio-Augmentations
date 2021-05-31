@@ -17,7 +17,8 @@ and go to your web browser (e.g chrome/safari): <dl> <link> `localhost:5000` </l
 
 To do 
 
-- [ ] Fix grid css
+- [ ] Grid css
+    - [ ] mobile 
 - [ ] Add pop up for all Augmentations 
   - [ ] Load text from separate file from server side
 
