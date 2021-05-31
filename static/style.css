@@ -1,3 +1,9 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    
+}
 
 body {
     /* background-color: burlywood; */
@@ -5,60 +11,10 @@ body {
     color: whitesmoke;
 }
 
- h1 {
-  text-align: center;  
-}
-
-h2{
-  text-align: center;
-}
-
-.error-para{
-  color: red;
-  text-transform: uppercase;
-}
-
 .header{
-  text-align: center;
-  color: white;
-  background-color: #424a50;
-  padding: 3px;
-  margin: 40px;
+    margin: 20px;
+    padding: 10px;
 }
-
-.header a{
-  text-decoration: none;
-  color: whitesmoke;
-}
-
-.dark-mode {
-  background-color: whitesmoke;
-  color: black;
-}
-
-
-.wrapper > div{
-  /* background-color: antiquewhite; */
-  background-color: #a4b5c1;
-  padding: 1em;
-
-}
-
-.box-dark {
-  /* background-color: antiquewhite; */
-  /* background-color :#7690a2; */
-  text-align: center;
-  color: whitesmoke;
-  /* border-radius: 25px; */
-}
-
- 
-.box-light {
-  /* background-color: #D3D3D3; */
-  /* background-color: #556d7c; */
-  text-align: center;
-  color: black;
-} 
 
 #grid {
   display: grid;
@@ -66,40 +22,159 @@ h2{
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1em;
   grid-auto-rows: 250px;
+  /* place-items: center; */
+  /* align-items: center; */
+
 }
 
 #audio{
     /* background-color:#36454f; */
+    padding: 5px;
     position: relative;
     /* border: 3px solid #73AD21; */
-    top: 190px;
+    /* top: 190px; */
+    /* text-align: center; */
+    left: 25px;
+}
+
+audio {
+    filter: sepia(20%) saturate(70%) grayscale(1) contrast(99%) invert(12%);
+    width: 250px;
+    height: 30px;
 }
 
 #aug-type{
-  position: relative;
-  bottom: 70px;
-}
-
-#aug-type-personal{
-  position: relative;
-  bottom: 95px;
+  /* position: relative; */
+  /* bottom: 70px; */
+  margin-top: auto;
+  text-align: center;
 }
 
 #grid img{
-  position: relative;
-  bottom: 110px;
-  height: auto;
+    text-align: center;
 }
 
 #grid img:hover{
   cursor: pointer;
 }
 
-#dark-mode-button{
-  position: absolute;
-  top: 10px;
-  right: 10px;
+.error-para{
+  color: red;
+  text-transform: uppercase;
 }
+
+
+
+nav {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    min-height: 8vh;
+    font-family: 'Poppins', sans-serif;
+    background-color: #5d4954;
+}
+
+.logo{
+    color: rgb(247, 247, 247);
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    font-size: 20px;
+}
+
+.nav-links{
+    display: flex;
+    justify-content: space-around;
+    width: 30%;
+}
+
+.nav-links li {
+    list-style: none;
+}
+
+.nav-links a {
+    color: rgb(247, 247, 247);
+    text-decoration: none;
+     letter-spacing: 3px;
+     font-weight: bold;
+     font-size: 14px;
+
+}
+
+.burger{
+    display: none;
+    cursor: pointer;
+}
+
+.burger div{
+    width: 25px;
+    height: 5px;
+    background-color: rgb(247, 247, 247);
+    margin: 5px;
+    transition: all 0.3s ease;
+}
+
+/* When screen width is smaller than 1024px */
+@media screen and (max-width:1024px) {
+    .nav-links{
+        width: 40%;
+    }
+    
+}
+
+/* When screen width is smaller than 768px */
+@media screen and (max-width:768px) {
+    body{
+        overflow-x: hidden;
+    }
+    .nav-links{
+        position: absolute;
+        right: 0px;
+        height: 92vh;
+        top: 8vh;
+        background-color: #5d4954;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 50%;
+        transform: translateX(100%);
+        transition: transform 0.5s ease-in;
+    }
+    .nav-links li {
+        opacity: 0;
+    }
+    .burger{
+        display: block;
+    }
+}
+
+.nav-active{
+    transform: translateX(0%);
+}
+
+@keyframes navLinksFade{
+    from{
+        opacity: 0;
+        transform: translateX(50px)
+    }to{
+        opacity: 1;
+        transform: translateX(0px)
+    }
+}
+
+.toggle .line1{
+    transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.toggle .line2{
+    opacity: 0;
+}
+
+.toggle .line3{
+    transform: rotate(45deg) translate(-5px, -6px);
+}
+
+
+/* Spec display and Augment your audio */
 
 .custom-spec-display{
   /* align-items: center; */
@@ -117,6 +192,9 @@ form button:active{
 .file-upload {
   background-color: #ffffff;
   width: 600px;
+  margin: 10px;
+  /* align-items: center;
+  text-align: center; */
   margin: 0 auto;
   padding: 20px;
 }
@@ -190,13 +268,6 @@ form button:active{
   text-transform: uppercase;
   color: #425d4e;
   padding: 60px 0;
-}
-
-a{
-  text-decoration: none;
-  font-size: large;
-  font-weight: 200;
-  color: whitesmoke;
 }
 
 .modal{

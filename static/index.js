@@ -1,31 +1,39 @@
-// Toogle between light and dark mode
-let dark_mode_button = document.getElementById('dark-mode-button')
-dark_mode_button.addEventListener('click', () => {
-  ToogleDarkLightMode()
-})
-function ToogleDarkLightMode() {
-  // add here to change header div background color
-  let header_element = document.getElementsByClassName('header')
-  let box_element = document.querySelectorAll('#box')
-  box_element.forEach(e => {
-    // debugger
-    if (e.className == 'box-light') { e.className = 'box-dark' }
-    else { e.className = 'box-light' }
-  })
-  let body_element = document.body;
-  body_element.classList.toggle("dark-mode");
+//Nav bar 
+const navSlide = () => {
+  const burger = document.querySelector('.burger')
+  const nav = document.querySelector('.nav-links')
+  const navLinks = document.querySelectorAll('.nav-links li')
+
+  // Toogle nav
+  burger.addEventListener('click', () => {
+    nav.classList.toggle('nav-active')
+    navLinks.forEach((link, index) => {
+      // Fade in the navbar content
+      if (link.style.animation) {
+        link.style.animation = ''
+      } else {
+        link.style.animation = `navLinksFade 0.5s ease forwards ${index / 5 + 0.2}s`
+      }
+    })
+
+  //Burger animation
+  burger.classList.toggle('toggle')
+  });
+
 }
 
+navSlide()
+
 // Change file name when uploading
-let file_input = document.getElementsByClassName('file-upload-input')[0];
-file_input.addEventListener("change", () => {
-  let upload_text = document.getElementsByClassName("drag-text")[0].children[0]
-  let error_message_elem = document.getElementsByClassName('error-para')[0]
-  if (error_message_elem) {
-    error_message_elem.remove()
-  }
-  upload_text.textContent = document.getElementsByClassName('file-upload-input')[0].files[0].name
-})
+// let file_input = document.getElementsByClassName('file-upload-input')[0];
+// file_input.addEventListener("change", () => {
+//   let upload_text = document.getElementsByClassName("drag-text")[0].children[0]
+//   let error_message_elem = document.getElementsByClassName('error-para')[0]
+//   if (error_message_elem) {
+//     error_message_elem.remove()
+//   }
+//   upload_text.textContent = document.getElementsByClassName('file-upload-input')[0].files[0].name
+// })
 
 
 
@@ -46,24 +54,24 @@ let closeButtons = document.getElementsByClassName('closeBtn')
 for (let j = 0; j < modals.length; j++) {
   bt = buttons[j]
   if (typeof window.addEventListener === 'function') {
-    (function(_bt) {
+    (function (_bt) {
       bt.addEventListener('click', () => {
         modals[j].style.display = 'block'
       });
     })
-    (bt);
+      (bt);
   }
 }
 
 for (let j = 0; j < modals.length; j++) {
   bt = closeButtons[j]
   if (typeof window.addEventListener === 'function') {
-    (function(_bt) {
+    (function (_bt) {
       bt.addEventListener('click', () => {
         modals[j].style.display = 'none'
       });
     })
-    (bt);
+      (bt);
   }
 }
 
@@ -79,3 +87,4 @@ window.addEventListener('click', (e) => {
   //     modals[1].style.display='none'
   // }
 })
+
