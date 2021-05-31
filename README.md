@@ -17,19 +17,14 @@ and go to your web browser (e.g chrome/safari): <dl> <link> localhost:5000 </lin
 
 To do 
 
-- [x] Better file uploader  
-- [x] Check if uploaded file is audio and do error handling
+- [ ] Fix grid css
 - [ ] Add pop up for all Augmentations 
   - [ ] Load text from separate file from server side
 
 - [ ] Javascript for loop modal click event
   - [x] Basic functionality - Added using closures (complex ? )
   - [ ] Close pop up on outside click 
-
-- [ ] Split into multiple files
-- [ ] Add Navbar
 - [ ] Load examples dynamically with Jinja for loop
-- [x] Remove border from client audio plots
 - [ ] Use threads / async to load multiple augmented files - see `async_example.py`
 - [ ] ENV variables for secret key
 
