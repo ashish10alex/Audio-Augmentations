@@ -18,11 +18,30 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 app.config['MAX_CONTENT_LENGTH'] = 30 * 1000 * 1000
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/', methods=['GET'])
 def index():
     show_examples = True #True if you want to see pre-augmented examples
-    if request.method == 'POST':
+    if request.method == 'GET':
+        # audio_file_paths = []
+        # audio_spectrogram_paths = []
+        # for file in os.listdir('static/audio'):
+        #     if file.endswith(".wav"):
+        #         audio_file_paths.append('static/audio/{}'.format(file))
+       
+        # for file in os.listdir('static/images'):
+        #     if file.endswith(".png"):
+        #         audio_spectrogram_paths.append('static/images/{}'.format(file))
+        # print(audio_spectrogram_paths)
+        # print(audio_file_paths)
+        return render_template("index.html", show_examples=show_examples, audio_spectrogram_paths=None, audio_file_paths=None, description_dict=description_dict)
 
+
+@app.route('/demos', methods=['GET', 'POST'])
+def demos():
+    if request.method == 'GET':
+        return render_template('demos.html')
+
+    if request.method == 'POST':
         show_examples=False
 
         if 'file' not in request.files:
@@ -60,31 +79,14 @@ def index():
         #get image object and save augmented audio for playing on website
         aug_imgs_dict = {}
         for key in augment_wavs_dict.keys():
-            #aug_imgs_dict[key] = create_figure(augment_wavs_dict[key])
+            aug_imgs_dict[key] = create_figure(augment_wavs_dict[key])
             sf.write('static/audio/client_aug_wavs/{}.wav'.format(key), augment_wavs_dict[key], samplerate=8000)
 
         total_time = time.time() - start
         print('total_time: ', total_time)
 
-        return render_template('index.html', images=aug_imgs_dict, show_examples=show_examples, description_dict=description_dict)
+        return render_template('demos.html', images=aug_imgs_dict, show_examples=show_examples, description_dict=description_dict)
 
-    if request.method == 'GET':
-        
-        # Commented for now 
-        # audio_file_paths = []
-        # audio_spectrogram_paths = []
-        # for file in os.listdir('static/audio'):
-        #     if file.endswith(".wav"):
-        #         audio_file_paths.append('static/audio/{}'.format(file))
-       
-        # for file in os.listdir('static/images'):
-        #     if file.endswith(".png"):
-        #         audio_spectrogram_paths.append('static/images/{}'.format(file))
-        # print(audio_spectrogram_paths)
-        # print(audio_file_paths)
-
-
-        return render_template("index.html", show_examples=show_examples, audio_spectrogram_paths=None, audio_file_paths=None, description_dict=description_dict)
 
 
 def create_figure(wav):

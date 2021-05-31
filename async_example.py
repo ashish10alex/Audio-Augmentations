@@ -27,8 +27,6 @@ def sync_req():
     total_time =  time.time() - start
     return f'<h2> Finally done {total_time :.5f} secs </h2>'
 
-
-
 @app.route("/async")
 async def async_req():
     start = time.time()

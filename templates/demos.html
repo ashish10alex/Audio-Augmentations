@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{%block title%} Demos {% endblock%}
+
+{% block content %}
+
+<!-- Augment your own audio files -->
+<!-- Handle drag and drop of audio -->
+<br>
+<div class="file-upload">
+  <form method="POST" action="/demos" enctype="multipart/form-data">
+    <input type="submit" class="file-upload-btn" value="Generate Augmentations">
+    <div class="image-upload-wrap">
+      <input class="file-upload-input" type="file" name="file">
+      <div class="drag-text">
+        <h3>Drag and drop your audio file</h3>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        {% for message in messages %}
+        <p class="error-para">{{ message }}</p>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+      </div>
+    </div>
+</div>
+</form>
+</div>
+
+<br>
+<br>
+
+
+<div id="grid">
+  <!-- Loop over uploaded files by the client and display them -->
+  {% if images %}
+  {% for key in images.keys() %}
+  <div id="box" class="box-dark">
+    <!-- removing preload auto takes care of previous audio being loaded issue -->
+    <p id="aug-type"> {{ key }} </p>
+    <img class="refs" src="{{ images[key] }}" width="300" height="170" alt=" {{ key }} Augmented "></img>
+    <audio id="audio" src="/static/audio/client_aug_wavs/{{key}}.wav" controls></audio>
+  </div>
+  {% endfor %}
+  {% endif %}
+
+
+<script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"> </script>
+<script type="text/javascript" src="{{ url_for('static', filename='file_upload.js') }}"> </script>
+
+{% endblock %}

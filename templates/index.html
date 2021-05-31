@@ -1,154 +1,87 @@
-<!doctype html>
-<title>Audio augmentations</title>
+{% extends "base.html" %}
 
-<head>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css"
-    integrity="sha384-Um5gpz1odJg5Z4HAmzPtgZKdTBHZdw8S29IecapCSB31ligYPhHQZMIlWLYQGVoc" crossorigin="anonymous">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.js"
-    integrity="sha384-YNHdsYkH6gMx9y3mRkmcJ2mFUjTd0qNQQvY9VYZgQd7DcN7env35GzlmFaZ23JGp"
-    crossorigin="anonymous"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/contrib/auto-render.min.js"
-    integrity="sha384-vZTG03m+2yp6N6BNi5iM4rW4oIwk5DfcNdFfxkk9ZWpDriOkXX8voJBFrAO7MpVl" crossorigin="anonymous"
-    onload="renderMathInElement(document.body);"></script>
+{%block title%} Home {% endblock%}
 
-</head>
-
-
-
-
-<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='style.css') }}">
-
-<button id="dark-mode-button">Toggle dark mode</button>
-
-
+{% block content %}
 
 {% if show_examples %}
 
 <div class="header">
-  <h1>Audio Augmentations </h1>
+  <!-- Empty div to create space -->
 </div>
-
-<h2> Example Augmentations</h2>
 
 <div id="grid">
 
   <div id="box" class="box-dark">
-    <audio id="audio" src='/static/audio/Un-Augmented.wav' controls preload='auto'></audio>
     <p id="aug-type"> Un augmented</p>
     <img class="refs" src="static/images/Un-Augmented.png" width="300" height="200" alt="un-augmented"></img>
+    <audio id="audio" src='/static/audio/Un-Augmented.wav' controls preload='auto'></audio>
   </div>
 
   <div id="box" class="box-dark">
     <!-- <audio src='/static/music/test.wav' controls preload='auto'></audio> -->
-    <audio id="audio" src='/static/audio/AddGaussianNoise.wav' controls preload='auto'></audio>
     <p id="aug-type">Gaussian noise </p>
     <img class='refs' src="static/images/AddGaussianNoise.png" width="300" height="200"
       alt="gaussian noise augmented"></img>
+    <audio id="audio" src='/static/audio/AddGaussianNoise.wav' controls preload='auto'></audio>
   </div>
 
   <div id="box" class="box-dark">
-    <audio id="audio" src='/static/audio/AddShortNoises.wav' controls preload='auto'></audio>
     <p id="aug-type"> Short noise</p>
     <img class='refs' src="static/images/AddShortNoises.png" width="300" height="200" alt="short noise augmented"></img>
+    <audio id="audio" src='/static/audio/AddShortNoises.wav' controls preload='auto'></audio>
   </div>
 
   <div id="box" class="box-dark">
-    <audio id="audio" src='/static/audio/TimeMask.wav' controls preload='auto'></audio>
     <p id="aug-type">Time Mask</p>
     <img class="refs" src="static/images/TimeMask.png" width="300" height="200" alt="time mask augmented"></img>
+    <audio id="audio" src='/static/audio/TimeMask.wav' controls preload='auto'></audio>
   </div>
 
   <div id="box" class="box-dark">
-    <audio id="audio" src='/static/audio/FrequencyMask.wav' controls preload='auto'></audio>
     <p id="aug-type">Frequency Mask</p>
     <img class="refs" src="static/images/FrequencyMask.png" width="300" height="200"
       alt="freqeuncy mask augmented"></img>
+    <audio id="audio" src='/static/audio/FrequencyMask.wav' controls preload='auto'></audio>
   </div>
 
   <div id="box" class="box-dark">
-    <audio id="audio" src='/static/audio/TFMask.wav' controls preload='auto'></audio>
     <p id="aug-type">Time Frequency Mask</p>
     <img class="refs" src="static/images/TFMask.png" width="300" height="200" alt="time-frequecy mask augmented"></img>
+    <audio id="audio" src='/static/audio/TFMask.wav' controls preload='auto'></audio>
   </div>
 
   <div id="box" class="box-dark">
-    <audio id="audio" src='/static/audio/TimeStretch.wav' controls preload='auto'></audio>
     <p id="aug-type">Time Stretch</p>
     <img class="refs" src="static/images/TimeStretch.png" width="300" height="200" alt="time stretch augmented"></img>
+    <audio id="audio" src='/static/audio/TimeStretch.wav' controls preload='auto'></audio>
   </div>
 
   <div id="box" class="box-dark">
-    <audio id="audio" src='/static/audio/PitchShift.wav' controls preload='auto'></audio>
     <p id="aug-type">Pitch shift</p>
     <img class="refs" src="static/images/PitchShift.png" width="300" height="200" alt="pitch shift augmented"></img>
+    <audio id="audio" src='/static/audio/PitchShift.wav' controls preload='auto'></audio>
   </div>
 
 </div>
 {% endif %}
 
-
-<!-- Augment your own audio files -->
-
-<div class="header">
-  <a href="#default" class="logo">
-    <h1>Augment your Audio file</h1>
-  </a>
+<!-- Modals for pop ups -->
+<!--Dynamic modal generation for each augmentation  -->
+<!-- Javascript pending -->
+{% for key in description_dict.keys() %}
+<div id="simpleModal{{i}}" class="modal">
+<div class="modal-content">
+  <span id="closeBtn{{i}}" class="closeBtn">&times;</span>
+  <p>
+    <!-- Add augmentation name here  -->
+  <h3>Augmentation Name {{i}}</h3>
+  {{description_dict[key]}}
+  </p>
 </div>
-
-
-<!-- Handle drag and drop of audio -->
-<div class="file-upload">
-  <form method="POST" action="/" enctype="multipart/form-data">
-    <input type="submit" class="file-upload-btn" value="Generate Augmentations">
-    <div class="image-upload-wrap">
-      <input class="file-upload-input" type="file" name="file">
-      <div class="drag-text">
-        <h3>Drag and drop your audio file</h3>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        {% for message in messages %}
-        <p class="error-para">{{ message }}</p>
-        {% endfor %}
-        {% endif %}
-        {% endwith %}
-      </div>
-    </div>
 </div>
-</form>
-</div>
+{% endfor %}
 
-<br>
-<br>
+<script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"> </script>
 
-
-<div id="grid">
-  <!-- Loop over uploaded files by the client and display them -->
-  {% if images %}
-  {% for key in images.keys() %}
-  <div id="box" class="box-dark">
-    <!-- removing preload auto takes care of previous audio being loaded issue -->
-    <audio id="audio" src="/static/audio/client_aug_wavs/{{key}}.wav" controls></audio>
-    <p id="aug-type-personal"> {{ key }} </p>
-    <img class="refs" src="{{ images[key] }}" width="250" height="50" alt=" {{ key }} Augmented "></img>
-  </div>
-  {% endfor %}
-  {% endif %}
-
-
-  <!-- Modals for pop ups -->
-  <!--Dynamic modal generation for each augmentation  -->
-  <!-- Javascript pending -->
-  {% for key in description_dict.keys() %}
-  <div id="simpleModal{{i}}" class="modal">
-    <div class="modal-content">
-      <span id="closeBtn{{i}}" class="closeBtn">&times;</span>
-      <p>
-      <h3>Augmentation {{i}}</h3>
-      {{description_dict[key]}}
-      </p>
-    </div>
-  </div>
-  {% endfor %}
-
-  <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}">
-  </script>
+{% endblock %}
