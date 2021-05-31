@@ -12,7 +12,7 @@ body {
 }
 
 audio{
-  width: 250px;
+  width: 295px;
   height: 30px;
 }
 
@@ -25,7 +25,7 @@ audio{
   display: grid;
   width: 100%;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-gap: 1em;
+  grid-gap: 3em;
   text-align: center;
 
 }
@@ -169,7 +169,7 @@ form button:active{
 }
 
 .file-upload {
-  background-color: #ffffff;
+  background-color: #f5f3f3;
   width: 600px;
   margin: 10px;
   /* align-items: center;
@@ -194,7 +194,7 @@ form button:active{
 }
 
 .file-upload-btn:hover {
-  background: #3e505b;
+  background: #100409;
   color: #ffffff;
   transition: all .2s ease;
   cursor: pointer;
@@ -223,13 +223,14 @@ form button:active{
 
 .image-upload-wrap {
   margin-top: 20px;
-  border: 4px dashed #afecd1;
+  border: 4px dotted black;
+  border-radius: 10px;
   position: relative;
 }
 
 .image-dropping,
 .image-upload-wrap:hover {
-  background-color: #abbeb5;
+  background-color: #fffefe;
   border: 4px dashed #678295;
 }
 
