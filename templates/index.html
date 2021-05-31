@@ -15,20 +15,21 @@
   <div id="box" class="box-dark">
     <p id="aug-type"> Un augmented</p>
     <img class="refs" src="static/images/Un-Augmented.png" width="300" height="200" alt="un-augmented"></img>
+    <br>
     <audio id="audio" src='/static/audio/Un-Augmented.wav' controls preload='auto'></audio>
   </div>
 
   <div id="box" class="box-dark">
     <!-- <audio src='/static/music/test.wav' controls preload='auto'></audio> -->
-    <p id="aug-type">Gaussian noise </p>
+    <p id="aug-type">Gaussian Noise </p>
     <img class='refs' src="static/images/AddGaussianNoise.png" width="300" height="200"
       alt="gaussian noise augmented"></img>
     <audio id="audio" src='/static/audio/AddGaussianNoise.wav' controls preload='auto'></audio>
   </div>
 
   <div id="box" class="box-dark">
-    <p id="aug-type"> Short noise</p>
-    <img class='refs' src="static/images/AddShortNoises.png" width="300" height="200" alt="short noise augmented"></img>
+    <p id="aug-type"> Short Noise</p>
+   <p> <img class='refs' src="static/images/AddShortNoises.png" width="300" height="200" alt="short noise augmented"></img> </p>
     <audio id="audio" src='/static/audio/AddShortNoises.wav' controls preload='auto'></audio>
   </div>
 
@@ -58,29 +59,13 @@
   </div>
 
   <div id="box" class="box-dark">
-    <p id="aug-type">Pitch shift</p>
+    <p id="aug-type">Pitch Shift</p>
     <img class="refs" src="static/images/PitchShift.png" width="300" height="200" alt="pitch shift augmented"></img>
     <audio id="audio" src='/static/audio/PitchShift.wav' controls preload='auto'></audio>
   </div>
 
 </div>
 {% endif %}
-
-<!-- Modals for pop ups -->
-<!--Dynamic modal generation for each augmentation  -->
-<!-- Javascript pending -->
-{% for key in description_dict.keys() %}
-<div id="simpleModal{{i}}" class="modal">
-<div class="modal-content">
-  <span id="closeBtn{{i}}" class="closeBtn">&times;</span>
-  <p>
-    <!-- Add augmentation name here  -->
-  <h3>Augmentation Name {{i}}</h3>
-  {{description_dict[key]}}
-  </p>
-</div>
-</div>
-{% endfor %}
 
 <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"> </script>
 

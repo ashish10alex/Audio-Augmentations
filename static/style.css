@@ -11,6 +11,11 @@ body {
     color: whitesmoke;
 }
 
+audio{
+  width: 250px;
+  height: 30px;
+}
+
 .header{
     margin: 20px;
     padding: 10px;
@@ -19,39 +24,14 @@ body {
 #grid {
   display: grid;
   width: 100%;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
   grid-gap: 1em;
-  grid-auto-rows: 250px;
-  /* place-items: center; */
-  /* align-items: center; */
-
-}
-
-#audio{
-    /* background-color:#36454f; */
-    padding: 5px;
-    position: relative;
-    /* border: 3px solid #73AD21; */
-    /* top: 190px; */
-    /* text-align: center; */
-    left: 25px;
-}
-
-audio {
-    filter: sepia(20%) saturate(70%) grayscale(1) contrast(99%) invert(12%);
-    width: 250px;
-    height: 30px;
-}
-
-#aug-type{
-  /* position: relative; */
-  /* bottom: 70px; */
-  margin-top: auto;
   text-align: center;
-}
 
-#grid img{
-    text-align: center;
+}
+#aug-type{
+  font-size: large;
+  font-weight: bold;
 }
 
 #grid img:hover{
@@ -71,7 +51,7 @@ nav {
     align-items: center;
     min-height: 8vh;
     font-family: 'Poppins', sans-serif;
-    background-color: #5d4954;
+    background-color: rgb(32, 30, 30);
 }
 
 .logo{
@@ -131,7 +111,7 @@ nav {
         right: 0px;
         height: 92vh;
         top: 8vh;
-        background-color: #5d4954;
+        background-color: rgb(32, 30, 30);
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -174,7 +154,6 @@ nav {
 }
 
 
-/* Spec display and Augment your audio */
 
 .custom-spec-display{
   /* align-items: center; */
@@ -182,8 +161,8 @@ nav {
 }
 
 form button:hover{
-  background: #149174;
-	color: #0C5645;
+  /* background: #149174; */
+	/* color: #0C5645; */
 }
 form button:active{
   border:0;
@@ -203,11 +182,11 @@ form button:active{
   width: 100%;
   margin: 0;
   color: #fff;
-  background: #1FB264;
+  background: rgb(32, 30, 30);
   border: none;
   padding: 10px;
   border-radius: 4px;
-  border-bottom: 4px solid #15824B;
+  border-bottom: 4px ;
   transition: all .2s ease;
   outline: none;
   text-transform: uppercase;
@@ -215,7 +194,7 @@ form button:active{
 }
 
 .file-upload-btn:hover {
-  background: #7ab796;
+  background: #3e505b;
   color: #ffffff;
   transition: all .2s ease;
   cursor: pointer;
@@ -244,14 +223,14 @@ form button:active{
 
 .image-upload-wrap {
   margin-top: 20px;
-  border: 4px dashed #6b7b74;
+  border: 4px dashed #afecd1;
   position: relative;
 }
 
 .image-dropping,
 .image-upload-wrap:hover {
-  background-color: rgb(200, 222, 167);
-  border: 4px dashed #ffffff;
+  background-color: #abbeb5;
+  border: 4px dashed #678295;
 }
 
 .image-title-wrap {
