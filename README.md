@@ -13,7 +13,7 @@ flask run -h 192.168.X.X
 ```
 
 
-and go to your web browser (e.g chrome/safari): <dl> <link> localhost:5000 </link> </dl>
+and go to your web browser (e.g chrome/safari): <dl> <link> `localhost:5000` </link> </dl>
 
 To do 
 
