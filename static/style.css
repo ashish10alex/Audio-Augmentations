@@ -55,7 +55,7 @@ nav {
 }
 
 .logo{
-    color: rgb(247, 247, 247);
+    color: rgb(250, 250, 250);
     text-transform: uppercase;
     letter-spacing: 5px;
     font-size: 25px;
@@ -72,12 +72,16 @@ nav {
 }
 
 .nav-links a {
-    color: rgb(247, 247, 247);
+    color: rgb(250, 250, 250);
     text-decoration: none;
      letter-spacing: 3px;
      font-weight: bold;
      font-size: 18px;
 
+}
+
+.nav-links a:hover{
+    color: rgb(220, 220, 220);
 }
 
 .burger{
@@ -88,7 +92,7 @@ nav {
 .burger div{
     width: 25px;
     height: 5px;
-    background-color: rgb(247, 247, 247);
+    background-color: rgb(250, 250, 250);
     margin: 5px;
     transition: all 0.3s ease;
 }
