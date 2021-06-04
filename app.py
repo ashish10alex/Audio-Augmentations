@@ -42,7 +42,6 @@ def demos():
         return render_template('demos.html')
 
     if request.method == 'POST':
-        show_examples=False
 
         if 'file' not in request.files:
             flash('No file part', 'error')
@@ -85,7 +84,9 @@ def demos():
         total_time = time.time() - start
         print('total_time: ', total_time)
 
-        return render_template('demos.html', images=aug_imgs_dict, show_examples=show_examples, description_dict=description_dict)
+        return render_template('demos.html', images=aug_imgs_dict, description_dict=description_dict)
+        # return render_template(url_for('demos', images=aug_imgs_dict,  description_dict=description_dict))
+        #return render_template(url_for('demos',  description_dict=description_dict))
 
 
 

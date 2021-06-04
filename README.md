@@ -17,6 +17,7 @@ and go to your web browser (e.g chrome/safari): <dl> <link> `localhost:5000` </l
 
 To do 
 
+- [ ] Javascript error handling on submit 
 - [ ] Multiple post requests ('test.wav' to scaleable)
 - [ ] Grid css mobile 
 - [ ] Add pop up for all Augmentations 
