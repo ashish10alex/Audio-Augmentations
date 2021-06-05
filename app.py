@@ -13,7 +13,7 @@ from matplotlib.figure import Figure
 from descriptions import description_dict
 
 app = Flask(__name__)
-app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+app.secret_key = os.environ.get('FLASKBOXPLAYKEY')
 #max upload size of 30Mb
 app.config['MAX_CONTENT_LENGTH'] = 30 * 1000 * 1000
 
@@ -88,6 +88,13 @@ def demos():
         # return render_template(url_for('demos', images=aug_imgs_dict,  description_dict=description_dict))
         #return render_template(url_for('demos',  description_dict=description_dict))
 
+@app.route('/play',  methods=['GET', 'POST'])
+def play():
+    if request.method == 'GET':
+        return render_template('play.html')
+    if request.method == 'POST':
+        aug_type = request.values.get('augtype')
+        return render_template('play.html', aug_type=aug_type)
 
 
 def create_figure(wav):

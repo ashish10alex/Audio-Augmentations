@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{%block title%} Play {% endblock%}
+
+{% block content %}
+
+<br>
+
+<div class="aug-play">
+<form method="POST" action="/play" enctype="multipart/form-data">
+  <label for="aug-type">Choose an augmentation</label>
+  <select name="augtype" id="augtype">
+      <option selected="true" disabled="disabled">Augmentation type</option>   
+      <option value="AddGaussianNoise">Add Gaussian Noise</option>
+      <option value="TimeMask">Time Masking</option>
+      <option value="FrequencyMask">Frequency Masking</option>
+      <option value="TFMask">Time-Frequency Masking</option>
+  </select>
+  <br><br>
+  <input type="submit" value="submit", class="aug-selection-btn">
+</form>
+
+<div class='aug-play-head'> </div> 
+
+
+
+</div>
+
+<script>
+
+let slectedAugType = document.getElementById('augtype')
+
+slectedAugType.addEventListener("change", () => {
+    let idx = slectedAugType.selectedIndex
+    document.getElementsByClassName('aug-play-head')[0].innerHTML = `<h2> ${slectedAugType[idx].value} </h2>`
+
+})
+
+</script>
+
+
+{% endblock %}
+
