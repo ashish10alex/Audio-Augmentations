@@ -40,9 +40,25 @@ audio{
   text-align: center;
 
 }
+
+
+
+#grid-play {
+  display: grid;
+  width:100%;
+  text-align: center;
+  display: none;
+}
+
+
 #aug-type{
   font-size: large;
   font-weight: bold;
+}
+
+#augtype-select{
+  padding: 5px;
+  margin: 10px;
 }
 
 #grid img:hover{
