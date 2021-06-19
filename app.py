@@ -18,6 +18,7 @@ app.secret_key = os.environ.get('FLASKBOXPLAYKEY')
 #max upload size of 30Mb
 app.config['MAX_CONTENT_LENGTH'] = 30 * 1000 * 1000
 
+os.makedirs('static/client_audio', exist_ok=True)
 
 @app.route('/', methods=['GET'])
 def index():
@@ -156,4 +157,4 @@ def augment_wav(wav):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')

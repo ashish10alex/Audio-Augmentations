@@ -4,12 +4,21 @@ A simple website to display audio and its spectrogram when an augmentation/opera
 To run the web app -
 
 ```
+python3 -m venv . 
+source bin/activate
+pip3 install -r requirements.txt
+
 python3 app.py
 
 #Or to run on local network 
 #change host parameter in app.run followed by 
 
 flask run -h 192.168.X.X
+```
+
+Ubuntu installation caveats
+```
+sudo apt-get install libsndfile1
 ```
 
 
