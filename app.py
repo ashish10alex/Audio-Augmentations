@@ -11,6 +11,7 @@ import io
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from descriptions import description_dict
+import uuid
 
 app = Flask(__name__)
 app.secret_key = os.environ.get('FLASKBOXPLAYKEY')
@@ -60,11 +61,13 @@ def demos():
             flash('Please upload .wav files')
             return redirect(request.url)
 
-        save_path = 'static/audio/test.wav'
+        client_wav_name = str(uuid.uuid4())
+        save_path = f'static/client_audio/{client_wav_name}.wav'
         uploaded_file.save(save_path)
         
         #load the file and compute spectrogram
-        wav, _ = librosa.load('static/audio/test.wav', sr=8000)
+        wav, _ = librosa.load(f'static/client_audio/{client_wav_name}.wav', sr=8000)
+        os.remove(save_path) #remove clinet audio after its processed
 
         #get augmented wavfiles as dict {'AugName': wav_data}
         #Less than 1.0 second to compute 8 augmentations
