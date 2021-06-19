@@ -88,14 +88,6 @@ def demos():
         # return render_template(url_for('demos', images=aug_imgs_dict,  description_dict=description_dict))
         #return render_template(url_for('demos',  description_dict=description_dict))
 
-@app.route('/play',  methods=['GET', 'POST'])
-def play():
-    if request.method == 'GET':
-        return render_template('play.html')
-    if request.method == 'POST':
-        aug_type = request.values.get('augtype')
-        return render_template('play.html', aug_type=aug_type)
-
 
 def create_figure(wav):
     fig = Figure()
@@ -121,7 +113,7 @@ def create_figure(wav):
 
 
 # Augment wavefile
-from audiomentations import Compose, AddGaussianNoise, TimeStretch, PitchShift, Shift,\
+from audiomentations import Compose, AddGaussianNoise, TimeStretch, PitchShift, \
 FrequencyMask, TimeMask, AddShortNoises, AddImpulseResponse
 
 SAMPLE_RATE = 8000

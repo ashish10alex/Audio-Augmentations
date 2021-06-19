@@ -11,7 +11,7 @@ body {
     color: whitesmoke;
 }
 
-.aug-play{
+.container{
      width: 80%;
     margin: 0 auto;
     text-align:center;
@@ -204,7 +204,7 @@ form button:active{
 }
 
 .aug-selection-btn{
-  width: 10%;
+  width: 11%;
   margin: 0;
   color: #fff;
   background: rgb(32, 30, 30);
