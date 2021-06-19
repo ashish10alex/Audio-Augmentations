@@ -17,17 +17,15 @@ flask run -h 192.168.X.X
 ```
 
 Ubuntu installation caveats
-```
-sudo apt-get install libsndfile1
-```
+For complete deployment guide on an AWS ubntu instance see [Link](https://github.com/ashish10alex/system-setup/blob/main/Ubuntu-aws.md) 
 
 
 and go to your web browser (e.g chrome/safari): <dl> <link> `localhost:5000` </link> </dl>
 
 To do 
 
+- [ ] Delete uuid client aug folder after certain time
 - [ ] Javascript error handling on submit 
-- [ ] Multiple post requests ('test.wav' to scaleable)
 - [ ] Grid css mobile 
 - [ ] Add pop up for all Augmentations 
   - [ ] Load text from separate file from server side
@@ -35,10 +33,8 @@ To do
 - [ ] Javascript for loop modal click event
   - [x] Basic functionality - Added using closures (complex ? )
   - [ ] Close pop up on outside click 
-- [ ] Load examples dynamically with Jinja for loop
 - [ ] Use threads / async to load multiple augmented files - see `async_example.py`
-- [ ] ENV variables for secret key
 
-Documentation
+External libraries used
 
 - [ ] For latex support in pop ups was support by - https://katex.org/
