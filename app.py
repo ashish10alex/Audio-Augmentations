@@ -1,6 +1,7 @@
 import time
 from flask import Flask
 import os
+import shutil
 from flask import request
 from flask.helpers import url_for 
 import soundfile as sf
@@ -19,6 +20,7 @@ app.secret_key = os.environ.get('FLASKBOXPLAYKEY')
 app.config['MAX_CONTENT_LENGTH'] = 30 * 1000 * 1000
 
 os.makedirs('static/client_audio', exist_ok=True)
+os.makedirs('static/client_aug_wavs', exist_ok=True)
 
 @app.route('/', methods=['GET'])
 def index():
@@ -62,12 +64,12 @@ def demos():
             flash('Please upload .wav files')
             return redirect(request.url)
 
-        client_wav_name = str(uuid.uuid4())
-        save_path = f'static/client_audio/{client_wav_name}.wav'
+        client_uuid = str(uuid.uuid4())
+        save_path = f'static/client_audio/{client_uuid}.wav'
         uploaded_file.save(save_path)
         
         #load the file and compute spectrogram
-        wav, _ = librosa.load(f'static/client_audio/{client_wav_name}.wav', sr=8000)
+        wav, _ = librosa.load(f'static/client_audio/{client_uuid}.wav', sr=8000)
         os.remove(save_path) #remove clinet audio after its processed
 
         #get augmented wavfiles as dict {'AugName': wav_data}
@@ -81,16 +83,17 @@ def demos():
         start = time.time()
         #get image object and save augmented audio for playing on website
         aug_imgs_dict = {}
+        os.makedirs(f'static/client_aug_wavs/{client_uuid}', exist_ok=True)
         for key in augment_wavs_dict.keys():
             aug_imgs_dict[key] = create_figure(augment_wavs_dict[key])
-            sf.write('static/audio/client_aug_wavs/{}.wav'.format(key), augment_wavs_dict[key], samplerate=8000)
+            sf.write(f'static/client_aug_wavs/{client_uuid}/{key}.wav', augment_wavs_dict[key], samplerate=8000)
 
+        #delete directory and its contents
+        # shutil.rmtree(f'static/client_aug_wavs/{client_uuid}')
         total_time = time.time() - start
         print('total_time: ', total_time)
 
-        return render_template('demos.html', images=aug_imgs_dict, description_dict=description_dict)
-        # return render_template(url_for('demos', images=aug_imgs_dict,  description_dict=description_dict))
-        #return render_template(url_for('demos',  description_dict=description_dict))
+        return render_template('demos.html', images=aug_imgs_dict, description_dict=description_dict, client_uuid=client_uuid)
 
 
 def create_figure(wav):

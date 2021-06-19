@@ -38,7 +38,7 @@
     <!-- removing preload auto takes care of previous audio being loaded issue -->
     <p id="aug-type"> {{ key }} </p>
     <img class="refs" src="{{ images[key] }}" width="300" height="170" alt=" {{ key }} Augmented "></img>
-    <audio id="audio" src="/static/audio/client_aug_wavs/{{key}}.wav" controls></audio>
+    <audio id="audio" src="/static/client_aug_wavs/{{client_uuid}}/{{key}}.wav" controls></audio>
   </div>
   {% endfor %}
   {% endif %}
