@@ -1,5 +1,9 @@
 static/audio/client_aug_wavs/*
 static/audio/test.wav
 .vscode
+bin/
+lib/
+__pycache__
 *.pyc
+*.cfg
 .*
