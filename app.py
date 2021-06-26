@@ -13,6 +13,7 @@ from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
 from descriptions import description_dict
 import uuid
+import concurrent.futures
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASKBOXPLAYKEY")
@@ -53,16 +54,26 @@ def demos():
         return render_template("demos.html")
 
     if request.method == "POST":
+        '''
+        Before threading - 
+        Total time to compute augmentations: 2.264
+        Total time to process POST request: 2.546
 
+        After threading -
+        Total time to compute augmentations: 0.802
+        Total time to process POST request: 1.221
+        '''
+        start_post_request_time = time.perf_counter()
+
+        #check is user has uploaded a file
         if "file" not in request.files:
             flash("No file part", "error")
             return redirect(request.url)
 
-        # get the uploaded file and save to static folder
+        # get the uploaded file 
         uploaded_file = request.files["file"]
 
-        # if user does not select file, browser also
-        # submit an empty part without filename
+        # if user does not select file or submitted an empty part without filename
         if uploaded_file.filename == "":
             flash("No file selected!", "error")
             return redirect(request.url)
@@ -79,38 +90,46 @@ def demos():
         wav, _ = librosa.load(f"static/client_audio/{client_uuid}.wav", sr=8000)
         os.remove(save_path)  # remove clinet audio after its processed
 
-        # get augmented wavfiles as dict {'AugName': wav_data}
-        # Less than 1.0 second to compute 8 augmentations
-        # Less than 0.5 sec to process after warmup
-        # Not the bottle neck
-        augment_wavs_dict = augment_wav(wav)
+        # get augmented wavfiles as dict {'AugmentationName': WaveformData}
+        # Less than 1.0 second to compute 8 augmentations.  Less than 0.5 sec to process after warmup. Not the bottle neck
+        augmentations_on_wav_dict = generate_augmentation_dict_from_wavfile(wav)
 
-        # create_figure function takes ~ 1.8 secs - needs to be async ?
-        # How to implement async in for loop ?
-        start = time.time()
-        # get image object and save augmented audio for playing on website
-        aug_imgs_dict = {}
+        start = time.perf_counter()
+        aug_imgs_dict = {} #sotres figure object from all augmentations
         os.makedirs(f"static/client_aug_wavs/{client_uuid}", exist_ok=True)
-        for key in augment_wavs_dict.keys():
-            aug_imgs_dict[key] = create_figure(augment_wavs_dict[key])
-            sf.write(
-                f"static/client_aug_wavs/{client_uuid}/{key}.wav",
-                augment_wavs_dict[key],
-                samplerate=8000,
-            )
+        
+        # Threading for concurrent creation of figure objects from wavefiles
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+                results = [executor.submit(create_figure, augmentations_on_wav_dict[key]) for key in augmentations_on_wav_dict.keys() ]
 
-        # delete directory and its contents
+        ##get the key and store results as dict {'AugmentationName': FigureObject}
+        augment_wav_dict_keys = list(augmentations_on_wav_dict.keys()) 
+        for idx, f in enumerate(concurrent.futures.as_completed(results)):
+            aug_imgs_dict[augment_wav_dict_keys[idx]] = f.result()
+            write_wav(augmentations_on_wav_dict, client_uuid, augment_wav_dict_keys[idx])
+
+        # delete directory and its contents after a certain time ? - Make it safe !! 
         # shutil.rmtree(f'static/client_aug_wavs/{client_uuid}')
-        total_time = time.time() - start
-        print("total_time: ", total_time)
+       
+        time_to_compute_aug = round(time.perf_counter() - start, 3) #approx 0.85 seconds 
+        time_to_process_post_request = round(time.perf_counter() - start_post_request_time, 3) #approx 0.85 seconds 
 
         return render_template(
             "demos.html",
             images=aug_imgs_dict,
+
             description_dict=description_dict,
             client_uuid=client_uuid,
+            time_to_compute_aug=time_to_compute_aug,
+            time_to_process_post_request=time_to_process_post_request,
         )
 
+def write_wav(augmentations_on_wav_dict, client_uuid, key):
+    sf.write(
+    f"static/client_aug_wavs/{client_uuid}/{key}.wav",
+    augmentations_on_wav_dict[key],
+    samplerate=8000,
+    )
 
 def create_figure(wav):
     fig = Figure()
@@ -118,9 +137,6 @@ def create_figure(wav):
     axis = fig.add_subplot(1, 1, 1)
     axis.specgram(wav)
 
-    # tricks to make the plots look clearner - removing white space (needs more work)
-    # axis.set_xticks([])
-    # axis.set_yticks([])
     axis.get_xaxis().set_visible(False)
     axis.get_yaxis().set_visible(False)
     axis.axis("off")  # this line removes extra white spaces
@@ -175,7 +191,7 @@ augment_tf = Compose(
 )
 
 
-def augment_wav(wav):
+def generate_augmentation_dict_from_wavfile(wav):
     augmented_wavs_dict = {}
     augmented_wavs_dict["Un-Augmented"] = wav
     for i in range(len(augment.transforms)):

@@ -29,6 +29,16 @@
 <br>
 <br>
 
+<hr>
+<br>
+{%if time_to_compute_aug %}
+    <p style="text-align:center;"> Total time to compute augmentations:  {{time_to_compute_aug}} </p>
+{% endif %}
+<br>
+{%if time_to_process_post_request %}
+    <p style="text-align:center;"> Total time to process POST request:  {{time_to_process_post_request}} </p>
+{% endif %}
+<hr>
 
 <div id="grid">
   <!-- Loop over uploaded files by the client and display them -->
@@ -46,5 +56,6 @@
 
 <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"> </script>
 <script type="text/javascript" src="{{ url_for('static', filename='file_upload.js') }}"> </script>
+
 
 {% endblock %}
