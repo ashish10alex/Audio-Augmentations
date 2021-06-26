@@ -81,6 +81,7 @@ def demos():
 
         # get augmented wavfiles as dict {'AugmentationName': WaveformData}
         # Less than 1.0 second to compute 7 augmentations.  Less than 0.5 sec to process after warmup. Not the bottle neck
+        # ADD MULTIPROCESSING HERE
         augmentations_on_wav_dict = generate_augmentation_dict_from_wavfile(wav)
 
         start = time.perf_counter()
@@ -88,13 +89,16 @@ def demos():
         os.makedirs(f"static/client_aug_wavs/{client_uuid}", exist_ok=True)
         
         # Threading for concurrent creation of figure objects from wavefiles
-        with concurrent.futures.ThreadPoolExecutor() as executor:
+        with concurrent.futures.ProcessPoolExecutor() as executor:
+            #submit function returns a future object that encapsulates execution of the thread it is associated with
             results = [executor.submit(create_figure, augmentations_on_wav_dict[key], key) for key in augmentations_on_wav_dict.keys() ]
 
         #get the key and store results as dict {'AugmentationName': FigureObject}
         augment_wav_dict_keys = list(augmentations_on_wav_dict.keys()) 
         print(augment_wav_dict_keys)
         for idx, f in enumerate(concurrent.futures.as_completed(results)):
+            #f is the future object encapsulates execution of the function - we can check if process is running, and
+            # also get the results
             # f.result() is the return value of create_figure() function and returns -> ('AugmentationName', FigureObject)
             augmented_imgs_dict[f.result()[0]] = f.result()[1]
 
