@@ -24,16 +24,18 @@ and go to your web browser (e.g chrome/safari): <dl> <link> `localhost:5000` </l
 
 To do 
 
+- [ ] Use threads / async to load multiple augmented files - see `async_example.py`
+  - [x] Aprroximately 1 second faster(2.54 to 1.758secs) from using threading `figure object` computation)
+  - [ ] Multiprocessing to compute augmentations (Currenly ~ 0.8secs to compute 7 augmentations)
 - [ ] Delete uuid client aug folder after certain time
-- [ ] Javascript error handling on submit 
-- [ ] Grid css mobile 
+- [ ] Post request gets resubmitted with same data bug
 - [ ] Add pop up for all Augmentations 
   - [ ] Load text from separate file from server side
 
 - [ ] Javascript for loop modal click event
   - [x] Basic functionality - Added using closures (complex ? )
   - [ ] Close pop up on outside click 
-- [ ] Use threads / async to load multiple augmented files - see `async_example.py`
+- [ ] Grid css mobile 
 
 External libraries used
 

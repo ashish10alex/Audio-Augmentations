@@ -91,7 +91,7 @@ def demos():
         os.remove(save_path)  # remove clinet audio after its processed
 
         # get augmented wavfiles as dict {'AugmentationName': WaveformData}
-        # Less than 1.0 second to compute 8 augmentations.  Less than 0.5 sec to process after warmup. Not the bottle neck
+        # Less than 1.0 second to compute 7 augmentations.  Less than 0.5 sec to process after warmup. Not the bottle neck
         augmentations_on_wav_dict = generate_augmentation_dict_from_wavfile(wav)
 
         start = time.perf_counter()
@@ -100,13 +100,17 @@ def demos():
         
         # Threading for concurrent creation of figure objects from wavefiles
         with concurrent.futures.ThreadPoolExecutor() as executor:
-                results = [executor.submit(create_figure, augmentations_on_wav_dict[key]) for key in augmentations_on_wav_dict.keys() ]
+            results = [executor.submit(create_figure, augmentations_on_wav_dict[key]) for key in augmentations_on_wav_dict.keys() ]
 
-        ##get the key and store results as dict {'AugmentationName': FigureObject}
+        #get the key and store results as dict {'AugmentationName': FigureObject}
         augment_wav_dict_keys = list(augmentations_on_wav_dict.keys()) 
         for idx, f in enumerate(concurrent.futures.as_completed(results)):
             aug_imgs_dict[augment_wav_dict_keys[idx]] = f.result()
-            write_wav(augmentations_on_wav_dict, client_uuid, augment_wav_dict_keys[idx])
+            # write_wav(augmentations_on_wav_dict, client_uuid, augment_wav_dict_keys[idx])
+
+        #Threading to concurretnly write client wavs to disk
+        with concurrent.futures.ThreadPoolExecutor() as executor:
+            [executor.submit(write_wav, augmentations_on_wav_dict, client_uuid, augment_wav_dict_keys[idx]) for idx in range(len(augment_wav_dict_keys))]
 
         # delete directory and its contents after a certain time ? - Make it safe !! 
         # shutil.rmtree(f'static/client_aug_wavs/{client_uuid}')
