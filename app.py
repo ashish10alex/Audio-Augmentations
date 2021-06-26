@@ -28,17 +28,6 @@ os.makedirs("static/client_aug_wavs", exist_ok=True)
 def index():
     show_examples = True  # True if you want to see pre-augmented examples
     if request.method == "GET":
-        # audio_file_paths = []
-        # audio_spectrogram_paths = []
-        # for file in os.listdir('static/audio'):
-        #     if file.endswith(".wav"):
-        #         audio_file_paths.append('static/audio/{}'.format(file))
-
-        # for file in os.listdir('static/images'):
-        #     if file.endswith(".png"):
-        #         audio_spectrogram_paths.append('static/images/{}'.format(file))
-        # print(audio_spectrogram_paths)
-        # print(audio_file_paths)
         return render_template(
             "index.html",
             show_examples=show_examples,
@@ -95,18 +84,19 @@ def demos():
         augmentations_on_wav_dict = generate_augmentation_dict_from_wavfile(wav)
 
         start = time.perf_counter()
-        aug_imgs_dict = {} #sotres figure object from all augmentations
+        augmented_imgs_dict = {} #sotres figure object from all augmentations
         os.makedirs(f"static/client_aug_wavs/{client_uuid}", exist_ok=True)
         
         # Threading for concurrent creation of figure objects from wavefiles
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            results = [executor.submit(create_figure, augmentations_on_wav_dict[key]) for key in augmentations_on_wav_dict.keys() ]
+            results = [executor.submit(create_figure, augmentations_on_wav_dict[key], key) for key in augmentations_on_wav_dict.keys() ]
 
         #get the key and store results as dict {'AugmentationName': FigureObject}
         augment_wav_dict_keys = list(augmentations_on_wav_dict.keys()) 
+        print(augment_wav_dict_keys)
         for idx, f in enumerate(concurrent.futures.as_completed(results)):
-            aug_imgs_dict[augment_wav_dict_keys[idx]] = f.result()
-            # write_wav(augmentations_on_wav_dict, client_uuid, augment_wav_dict_keys[idx])
+            # f.result() is the return value of create_figure() function and returns -> ('AugmentationName', FigureObject)
+            augmented_imgs_dict[f.result()[0]] = f.result()[1]
 
         #Threading to concurretnly write client wavs to disk
         with concurrent.futures.ThreadPoolExecutor() as executor:
@@ -120,12 +110,12 @@ def demos():
 
         return render_template(
             "demos.html",
-            images=aug_imgs_dict,
-
-            description_dict=description_dict,
-            client_uuid=client_uuid,
+            augmented_imgs_dict=augmented_imgs_dict,
+            description_dict=description_dict, #desscription of each augmentation used in modal object. see description.py
+            client_uuid=client_uuid, #unique identifier for each client
             time_to_compute_aug=time_to_compute_aug,
             time_to_process_post_request=time_to_process_post_request,
+            augment_wav_dict_keys=augment_wav_dict_keys, #list of keys to display results in a consistent order
         )
 
 def write_wav(augmentations_on_wav_dict, client_uuid, key):
@@ -135,7 +125,7 @@ def write_wav(augmentations_on_wav_dict, client_uuid, key):
     samplerate=8000,
     )
 
-def create_figure(wav):
+def create_figure(wav, key):
     fig = Figure()
 
     axis = fig.add_subplot(1, 1, 1)
@@ -151,7 +141,7 @@ def create_figure(wav):
     FigureCanvas(fig).print_png(pngImage)
     pngImageB64String = "data:image/png;base64,"
     pngImageB64String += base64.b64encode(pngImage.getvalue()).decode("utf8")
-    return pngImageB64String
+    return (key, pngImageB64String)
 
 
 # Augment wavefile

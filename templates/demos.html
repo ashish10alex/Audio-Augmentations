@@ -42,12 +42,12 @@
 
 <div id="grid">
   <!-- Loop over uploaded files by the client and display them -->
-  {% if images %}
-  {% for key in images.keys() %}
+  {% if augmented_imgs_dict %}
+  {% for key in augment_wav_dict_keys%}
   <div id="box" class="box-dark">
     <!-- removing preload auto takes care of previous audio being loaded issue -->
     <p id="aug-type"> {{ key }} </p>
-    <img class="refs" src="{{ images[key] }}" width="300" height="170" alt=" {{ key }} Augmented "></img>
+    <img class="refs" src="{{ augmented_imgs_dict[key] }}" width="300" height="170" alt=" {{ key }} Augmented "></img>
     <audio id="audio" src="/static/client_aug_wavs/{{client_uuid}}/{{key}}.wav" controls></audio>
   </div>
   {% endfor %}
