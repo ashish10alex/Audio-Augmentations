@@ -22,6 +22,7 @@ const navSlide = () => {
 
 }
 
+
 navSlide()
 
 // Change file name when uploading
