@@ -125,12 +125,7 @@ def demos():
         # delete directory and its contents after a certain time ? - Make it safe !!
         # shutil.rmtree(f'static/client_aug_wavs/{client_uuid}')
 
-        time_to_compute_fig_object = round(
-            time.perf_counter() - start, 3
-        )  # approx 0.85 seconds
-        time_to_process_post_request = round(
-            time.perf_counter() - start_post_request_time, 3
-        )  # approx 0.85 seconds
+        time_to_compute_fig_object = round(time.perf_counter() - start, 3)
 
         # List of augmentation names to always display augmentations in the same order
         augment_wav_dict_keys = ["Un-Augmented"]
@@ -139,6 +134,10 @@ def demos():
             if aug_name == "Compose":
                 aug_name = "TF Mask"
             augment_wav_dict_keys.append(aug_name)
+
+        time_to_process_post_request = round(
+            time.perf_counter() - start_post_request_time, 3
+        )
 
         print(augment_wav_dict_keys)
 
