@@ -14,6 +14,7 @@ from matplotlib.figure import Figure
 from descriptions import description_dict
 import uuid
 import concurrent.futures
+import pdbr
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASKBOXPLAYKEY")
@@ -44,13 +45,16 @@ def demos():
 
     if request.method == "POST":
         '''
+        These benchmarks may vary depending on server warmup time but threading definitely faster- 
+
         Before threading - 
         Total time to compute augmentations: 2.264
         Total time to process POST request: 2.546
 
-        After threading -
-        Total time to compute augmentations: 0.802
-        Total time to process POST request: 1.221
+        After threading- 
+        Total time to process POST request: 0.969
+        Total time to compute fig object: 0.71
+        Total time to compute augmentations: 0.253
         '''
         start_post_request_time = time.perf_counter()
 
@@ -80,45 +84,54 @@ def demos():
         os.remove(save_path)  # remove clinet audio after its processed
 
         # get augmented wavfiles as dict {'AugmentationName': WaveformData}
-        # Less than 1.0 second to compute 7 augmentations.  Less than 0.5 sec to process after warmup. Not the bottle neck
-        # ADD MULTIPROCESSING HERE
+        start_aug_computation = time.perf_counter()
         augmentations_on_wav_dict = generate_augmentation_dict_from_wavfile(wav)
+        time_to_compute_augs = round(time.perf_counter() - start_aug_computation, 3) #approx 0.85 seconds 
 
         start = time.perf_counter()
         augmented_imgs_dict = {} #sotres figure object from all augmentations
         os.makedirs(f"static/client_aug_wavs/{client_uuid}", exist_ok=True)
         
         # Threading for concurrent creation of figure objects from wavefiles
-        with concurrent.futures.ProcessPoolExecutor() as executor:
+        with concurrent.futures.ThreadPoolExecutor() as executor:
             #submit function returns a future object that encapsulates execution of the thread it is associated with
-            results = [executor.submit(create_figure, augmentations_on_wav_dict[key], key) for key in augmentations_on_wav_dict.keys() ]
+            results = [executor.submit(create_figure, augmentations_on_wav_dict[key], key) for key in augmentations_on_wav_dict.keys()]
 
         #get the key and store results as dict {'AugmentationName': FigureObject}
         augment_wav_dict_keys = list(augmentations_on_wav_dict.keys()) 
-        print(augment_wav_dict_keys)
         for idx, f in enumerate(concurrent.futures.as_completed(results)):
             #f is the future object encapsulates execution of the function - we can check if process is running, and
             # also get the results
             # f.result() is the return value of create_figure() function and returns -> ('AugmentationName', FigureObject)
             augmented_imgs_dict[f.result()[0]] = f.result()[1]
 
-        #Threading to concurretnly write client wavs to disk
+        #Threading to concurretnly write client wavs to disk [IO bound]
         with concurrent.futures.ThreadPoolExecutor() as executor:
             [executor.submit(write_wav, augmentations_on_wav_dict, client_uuid, augment_wav_dict_keys[idx]) for idx in range(len(augment_wav_dict_keys))]
 
         # delete directory and its contents after a certain time ? - Make it safe !! 
         # shutil.rmtree(f'static/client_aug_wavs/{client_uuid}')
        
-        time_to_compute_aug = round(time.perf_counter() - start, 3) #approx 0.85 seconds 
+        time_to_compute_fig_object = round(time.perf_counter() - start, 3) #approx 0.85 seconds 
         time_to_process_post_request = round(time.perf_counter() - start_post_request_time, 3) #approx 0.85 seconds 
+
+        #List of augmentation names to always display augmentations in the same order
+        augment_wav_dict_keys = ['Un-Augmented']
+        for transform in augment.transforms:
+            aug_name = str(transform).split(".")[-1].split(" ")[0]
+            if aug_name == 'Compose': aug_name = 'TF Mask'
+            augment_wav_dict_keys.append(aug_name)
+
+        print(augment_wav_dict_keys)
 
         return render_template(
             "demos.html",
             augmented_imgs_dict=augmented_imgs_dict,
             description_dict=description_dict, #desscription of each augmentation used in modal object. see description.py
             client_uuid=client_uuid, #unique identifier for each client
-            time_to_compute_aug=time_to_compute_aug,
+            time_to_compute_fig_object=time_to_compute_fig_object,
             time_to_process_post_request=time_to_process_post_request,
+            time_to_compute_augs=time_to_compute_augs,
             augment_wav_dict_keys=augment_wav_dict_keys, #list of keys to display results in a consistent order
         )
 
@@ -130,6 +143,15 @@ def write_wav(augmentations_on_wav_dict, client_uuid, key):
     )
 
 def create_figure(wav, key):
+    '''
+    Generate figure object given waveform data
+    wav - waveform data
+    key - Name of the augmentation
+
+    Returns - 
+    key - Name of the augmentation
+    pngImageB64String - Figure object used for plotting
+    '''
     fig = Figure()
 
     axis = fig.add_subplot(1, 1, 1)
@@ -179,28 +201,34 @@ augment = Compose(
         PitchShift(min_semitones=1, max_semitones=2, p=1),
     ]
 )
-
-
 augment_tf = Compose(
     [
         FrequencyMask(min_frequency_band=0.1, max_frequency_band=0.10, p=1),
         TimeMask(min_band_part=0.1, max_band_part=0.20, p=1, fade=True),
     ]
 )
-
+augment.transforms.append(augment_tf)
 
 def generate_augmentation_dict_from_wavfile(wav):
+    '''
+    returns -> {'AugNames': AugmentedWaveforms}
+    '''
     augmented_wavs_dict = {}
     augmented_wavs_dict["Un-Augmented"] = wav
-    for i in range(len(augment.transforms)):
-        augmented_wavs_dict[
-            str(augment.transforms[i]).split(".")[-1].split(" ")[0]
-        ] = augment.transforms[i](samples=wav, sample_rate=8000)
-
-    tf_wav = augment_tf(wav, sample_rate=8000)
-    augmented_wavs_dict["TF Mask"] = tf_wav
+    
+    with concurrent.futures.ThreadPoolExecutor() as executor:
+        augmented_wavs = [executor.submit(apply_augment_transform_to_waveform, augment.transforms[i], wav) for i in range(len(augment.transforms))] 
+    for i, f in enumerate(concurrent.futures.as_completed(augmented_wavs)):
+        augmented_wavs_dict[f.result()[0]] = f.result()[1]
     return augmented_wavs_dict
 
+def apply_augment_transform_to_waveform(transform, wav, sample_rate=8000):
+    '''
+    returns -> {'AugName': AugmentedWaveform }
+    '''
+    AugName = str(transform).split(".")[-1].split(" ")[0] 
+    if AugName == 'Compose': AugName = 'TF Mask'
+    return (AugName, transform(wav, sample_rate))
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")

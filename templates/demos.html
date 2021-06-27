@@ -31,13 +31,18 @@
 
 <hr>
 <br>
-{%if time_to_compute_aug %}
-    <p style="text-align:center;"> Total time to compute augmentations:  {{time_to_compute_aug}} </p>
-{% endif %}
-<br>
 {%if time_to_process_post_request %}
     <p style="text-align:center;"> Total time to process POST request:  {{time_to_process_post_request}} </p>
 {% endif %}
+<br>
+{%if time_to_compute_fig_object %}
+    <p style="text-align:center;"> Total time to compute fig object:  {{time_to_compute_fig_object}} </p>
+{% endif %}
+<br>
+{%if time_to_compute_augs %}
+    <p style="text-align:center;"> Total time to compute augmentations:  {{time_to_compute_augs}} </p>
+{% endif %}
+<br>
 <hr>
 
 <div id="grid">
