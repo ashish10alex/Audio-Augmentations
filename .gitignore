@@ -4,6 +4,7 @@ static/client_aug_wavs/*
 lib64
 share
 .vscode/
+.vim/
 bin/
 lib/
 __pycache__
