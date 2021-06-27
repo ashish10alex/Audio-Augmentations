@@ -9,4 +9,3 @@ lib/
 __pycache__
 *.pyc
 *.cfg
-.*
