@@ -91,7 +91,7 @@ def demos():
         )  # approx 0.85 seconds
 
         start = time.perf_counter()
-        augmented_imgs_dict = {}  # sotres figure object from all augmentations
+        augmented_imgs_dict = {}  # stores figure object from all augmentations
         os.makedirs(f"static/client_aug_wavs/{client_uuid}", exist_ok=True)
 
         # Threading for concurrent creation of figure objects from wavefiles
@@ -110,7 +110,7 @@ def demos():
             # f.result() is the return value of create_figure() function and returns -> ('AugmentationName', FigureObject)
             augmented_imgs_dict[f.result()[0]] = f.result()[1]
 
-        # Threading to concurretnly write client wavs to disk [IO bound]
+        # Threading to concurrently write client wavs to disk [IO bound]
         with concurrent.futures.ThreadPoolExecutor() as executor:
             [
                 executor.submit(
@@ -144,7 +144,7 @@ def demos():
         return render_template(
             "demos.html",
             augmented_imgs_dict=augmented_imgs_dict,
-            description_dict=description_dict,  # desscription of each augmentation used in modal object. see description.py
+            description_dict=description_dict,  # description of each augmentation used in modal object. See `description.py`
             client_uuid=client_uuid,  # unique identifier for each client
             time_to_compute_fig_object=time_to_compute_fig_object,
             time_to_process_post_request=time_to_process_post_request,
