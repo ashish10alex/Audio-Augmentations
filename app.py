@@ -37,7 +37,6 @@ def index():
             description_dict=description_dict,
         )
 
-
 @app.route("/demos", methods=["GET", "POST"])
 def demos():
     if request.method == "GET":

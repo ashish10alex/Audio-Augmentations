@@ -19,11 +19,62 @@ const navSlide = () => {
   //Burger animation
   burger.classList.toggle('toggle')
   });
+}
+navSlide()
+// Will only work for the first image - fix this !!
+// Find the correct css as well!!
+// const imageBoxDiv =  document.getElementById('box')
+const imageBoxDiv =  document.getElementsByClassName('box-dark')
+const imageObject = document.getElementsByClassName('refs')[0]
 
+// Function to create Info popup
+const createInfoPopUp = (imageBoxDiv) => {
+    isInfoPopup = 0 // Flag to check if a div with class name InfoPopup is already there
+
+    // Check if the object has a class named Infopop
+    for (var i = 0; i < imageBoxDiv.childNodes.length; i++) {
+        if (imageBoxDiv.childNodes[i].className == 'infoPop') {
+            console.log('Div InfoPop')
+            isInfoPopup = 1
+            imageBoxDiv.childNodes[i].textContent = "[Click to get info]"
+        }        
+    }
+
+    // If a div named InfoPopup class is already not there 
+    if (isInfoPopup == 0){
+        console.log('Creating div cos no InfoPop')
+        var node = document.createElement("div");   
+        node.className = "infoPop"
+        imageBoxDiv.appendChild(node)
+        node.textContent = '[Click to get info]'
+        imageBoxDiv.appendChild(node)
+    }
+}
+
+// Function to remove Info popup
+const removeInfoPopUp = (imageBoxDiv) => {
+    for (var i = 0; i < imageBoxDiv.childNodes.length; i++) {
+        if (imageBoxDiv.childNodes[i].className == 'infoPop') {
+            imageBoxDiv.childNodes[i].innerText = ""
+            console.log('Found InfoPop to remove')
+        }        
+    }
 }
 
 
-navSlide()
+for (let j = 0; j < imageBoxDiv.length; j++) {
+      imageBoxDiv[j].addEventListener('mouseenter', () => {
+          createInfoPopUp(imageBoxDiv[j])
+          console.log('Entered')
+  })
+}
+
+for (let j = 0; j < imageBoxDiv.length; j++) {
+      imageBoxDiv[j].addEventListener('mouseleave', () => {
+        console.log('Exited')
+        removeInfoPopUp(imageBoxDiv[j])
+  })
+}
 
 // Change file name when uploading
 // let file_input = document.getElementsByClassName('file-upload-input')[0];
@@ -44,7 +95,6 @@ let modals = document.getElementsByClassName('modal')
 let buttons = document.getElementsByClassName('refs')
 // get the close buttons by class name
 let closeButtons = document.getElementsByClassName('closeBtn')
-
 
 // Modal click event in a loop
 // Code from - https://stackoverflow.com/questions/8909652/adding-click-event-listeners-in-loop
