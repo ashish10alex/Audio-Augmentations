@@ -46,6 +46,8 @@ description_dict["Gaussian Noise Augmentation"] = gaussian_noise_description
 description_dict["Short Noise Augmentation"] = short_noise_description
 description_dict["Time Masking Augmentation"] = time_mask_description
 description_dict["Frequency Masking Augmentation"] = frequency_masking_description
-description_dict["Time Frequency Masking Augmentation"] = time_freqeuncy_mask_description
+description_dict[
+    "Time Frequency Masking Augmentation"
+] = time_freqeuncy_mask_description
 description_dict["Time Stretch Augmentation"] = time_stretch_description
 description_dict["Pitch Shift Augmentation"] = pitch_shift_description

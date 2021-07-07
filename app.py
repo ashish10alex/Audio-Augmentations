@@ -1,20 +1,21 @@
-import time
-from flask import Flask
+import base64
+import concurrent.futures
+import io
 import os
 import shutil
-from flask import request
-from flask.helpers import url_for
-import soundfile as sf
-from flask import render_template, redirect, flash
+import time
+import uuid
+
 import librosa
-import base64
-import io
+import pdbr
+import soundfile as sf
+from flask import Flask, flash, redirect, render_template, request
+from flask.helpers import url_for
 from matplotlib.backends.backend_agg import FigureCanvasAgg as FigureCanvas
 from matplotlib.figure import Figure
+
 from descriptions import description_dict
-import uuid
-import concurrent.futures
-import pdbr
+from utils import get_exectution_time
 
 app = Flask(__name__)
 app.secret_key = os.environ.get("FLASKBOXPLAYKEY")
@@ -26,6 +27,7 @@ os.makedirs("static/client_aug_wavs", exist_ok=True)
 
 
 @app.route("/", methods=["GET"])
+# @get_exectution_time
 def index():
     show_examples = True  # True if you want to see pre-augmented examples
     if request.method == "GET":
@@ -37,7 +39,9 @@ def index():
             description_dict=description_dict,
         )
 
+
 @app.route("/demos", methods=["GET", "POST"])
+# @get_exectution_time
 def demos():
     if request.method == "GET":
         return render_template("demos.html")
@@ -80,7 +84,8 @@ def demos():
 
         # load the file and compute spectrogram
         wav, _ = librosa.load(f"static/client_audio/{client_uuid}.wav", sr=8000)
-        os.remove(save_path)  # remove clinet audio after its processed
+        # TODO - check this - is removing the path of any use
+        os.remove(save_path)  # remove client audio after its processed
 
         # get augmented wavfiles as dict {'AugmentationName': WaveformData}
         start_aug_computation = time.perf_counter()
@@ -138,8 +143,6 @@ def demos():
             time.perf_counter() - start_post_request_time, 3
         )
 
-        print(augment_wav_dict_keys)
-
         return render_template(
             "demos.html",
             augmented_imgs_dict=augmented_imgs_dict,
@@ -152,6 +155,7 @@ def demos():
         )
 
 
+# @get_exectution_time
 def write_wav(augmentations_on_wav_dict, client_uuid, key):
     sf.write(
         f"static/client_aug_wavs/{client_uuid}/{key}.wav",
@@ -160,6 +164,7 @@ def write_wav(augmentations_on_wav_dict, client_uuid, key):
     )
 
 
+# @get_exectution_time
 def create_figure(wav, key):
     """
     Generate figure object given waveform data
@@ -189,16 +194,9 @@ def create_figure(wav, key):
 
 
 # Augment wavefile
-from audiomentations import (
-    Compose,
-    AddGaussianNoise,
-    TimeStretch,
-    PitchShift,
-    FrequencyMask,
-    TimeMask,
-    AddShortNoises,
-    AddImpulseResponse,
-)
+from audiomentations import (AddGaussianNoise, AddImpulseResponse,
+                             AddShortNoises, Compose, FrequencyMask,
+                             PitchShift, TimeMask, TimeStretch)
 
 SAMPLE_RATE = 8000
 
