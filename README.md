@@ -24,6 +24,7 @@ and go to your web browser (e.g chrome/safari): <dl> <link> `localhost:5000` </l
 
 ### To do 
 
+- [ ] Add type hints
 - [x] Use threads / async to load multiple augmented files - see `async_example.py`
   - [x] Approximately 1 second faster(2.54 to 1.758secs) from using threading `figure object` computation)
   - [x] Multiprocessing to compute augmentations (Doesn't seem to work as well as threading)
