@@ -1,4 +1,4 @@
-# box-play
+# Audio-Augmentations
 A website to display audio and its spectrogram when an augmentation/operation is applied to the audio. Additionally it allowes users to augment their own audio file  
 
 To run the web app -
