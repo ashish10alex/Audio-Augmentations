@@ -4,6 +4,7 @@ A website to display audio and its spectrogram when an augmentation/operation is
 To run the web app -
 
 ```
+mkdir augenv; cd augenv
 python3 -m venv . 
 source bin/activate
 pip3 install -r requirements.txt

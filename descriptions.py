@@ -41,6 +41,12 @@ Time stretch augmentation
 pitch_shift_description = r"""
 Pitch shift augmentation
 """
+mixup_description = r"""
+Mixup augmentation
+"""
+cutmix_description = r"""
+CutMix augmentation
+"""
 description_dict["Un Augmented"] = un_augmented_description
 description_dict["Gaussian Noise Augmentation"] = gaussian_noise_description
 description_dict["Short Noise Augmentation"] = short_noise_description
@@ -51,3 +57,5 @@ description_dict[
 ] = time_freqeuncy_mask_description
 description_dict["Time Stretch Augmentation"] = time_stretch_description
 description_dict["Pitch Shift Augmentation"] = pitch_shift_description
+description_dict["Mixup Augmentation"] = mixup_description
+description_dict["CutMix Augmentation"] = cutmix_description

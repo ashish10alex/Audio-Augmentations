@@ -25,6 +25,7 @@ app.config["MAX_CONTENT_LENGTH"] = 30 * 1000 * 1000
 os.makedirs("static/client_audio", exist_ok=True)
 os.makedirs("static/client_aug_wavs", exist_ok=True)
 
+port = 5100
 
 @app.route("/", methods=["GET"])
 # @get_exectution_time
@@ -256,4 +257,4 @@ def apply_augment_transform_to_waveform(transform, wav, sample_rate=8000):
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0")
+    app.run(debug=True, host="0.0.0.0", port=port)

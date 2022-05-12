@@ -46,7 +46,7 @@ const createInfoPopUp = (imageBoxDiv) => {
         var node = document.createElement("div");   
         node.className = "infoPop"
         imageBoxDiv.appendChild(node)
-        node.textContent = '[Click to get info]'
+        node.textContent = '[Click on spectrogram to get info]'
         imageBoxDiv.appendChild(node)
     }
 }
